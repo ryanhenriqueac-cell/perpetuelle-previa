@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Perpetuélle · Mega Hair</title>
+<meta name="description" content="Studio Perpetuélle, especialista em mega hair. Conheça o Ponto Brasileiro, método de fixação exclusivo criado pela casa.">
+<meta name="theme-color" content="#000000">
+<!-- PRÉVIA: remover o noindex quando o site for lançado -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- PROPOSTA v1 da abertura. Textos marcados com .provisorio aguardam o salão. -->
+
+<header class="nav" id="nav">
+  <a href="#topo" class="nav__marca" aria-label="Studio Perpetuélle, início">
+    <svg viewBox="0 0 40 40" class="nav__emblema" aria-hidden="true"><path d="M20 3 L37 20 L20 37 L3 20 Z"/><path d="M25 3 L42 20 L25 37 L8 20 Z" opacity=".55"/><circle cx="22.5" cy="11" r="2"/></svg>
+    <span>Perpetuélle</span>
+  </a>
+  <nav class="nav__links" id="menu">
+    <a href="#ponto-brasileiro">Ponto Brasileiro</a>
+    <a href="#mega-hair">Mega Hair</a>
+    <a href="#equipe">Equipe</a>
+    <a href="https://tuellehair.com.br/" target="_blank" rel="noopener">Tuelle Hair</a>
+    <a href="#agendar" class="btn btn--cobre nav__cta">Agendar</a>
+  </nav>
+  <button class="nav__menu" id="abrir-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
+</header>
+
+<main id="topo">
+  <!-- ABERTURA -->
+  <section class="hero" id="hero">
+    <svg class="hero__linhas" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M720 -420 L1640 450 L720 1320 L-200 450 Z"/>
+      <path d="M820 -420 L1740 450 L820 1320 L-100 450 Z"/>
+    </svg>
+
+    <div class="hero__texto">
+      <p class="sobretitulo entra" style="--d:.1s">Studio Perpetuélle · Mega Hair</p>
+      <h1 class="entra" style="--d:.25s">Mega hair com assinatura: <em>Ponto Brasileiro.</em></h1>
+      <p class="hero__sub entra" style="--d:.45s">Um método de fixação criado aqui, exclusivo da casa. Cabelo longo, do seu jeito, nas mãos de quem inventou a técnica.</p>
+      <div class="hero__acoes entra" style="--d:.6s">
+        <a href="#agendar" class="btn btn--cobre">Agendar avaliação</a>
+        <a href="#ponto-brasileiro" class="btn btn--linha">Conhecer o método</a>
+      </div>
+    </div>
+
+    <div class="hero__janela entra" style="--d:.15s" aria-hidden="true">
+      <div class="janela">
+        <canvas id="fios"></canvas>
+        <div class="janela__brilho"></div>
+      </div>
+      <svg class="janela__moldura" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path class="desenha" d="M50 1 L99 50 L50 99 L1 50 Z"/>
+      </svg>
+      <svg class="janela__eco" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path class="desenha desenha--2" d="M50 1 L99 50 L50 99 L1 50 Z"/>
+      </svg>
+      <span class="janela__ponto janela__ponto--a"></span>
+      <span class="janela__ponto janela__ponto--b"></span>
+    </div>
+
+    <a href="#ponto-brasileiro" class="hero__rolar" aria-label="Rolar para o Ponto Brasileiro"><span></span></a>
+  </section>
+
+  <!-- FAIXA -->
+  <div class="faixa" aria-hidden="true">
+    <div class="faixa__trilho">
+      <span>Ponto Brasileiro</span><i></i><span>Mega Hair</span><i></i><span>Exclusivo da casa</span><i></i><span>Tuelle Hair</span><i></i>
+      <span>Ponto Brasileiro</span><i></i><span>Mega Hair</span><i></i><span>Exclusivo da casa</span><i></i><span>Tuelle Hair</span><i></i>
+    </div>
+  </div>
+
+  <!-- PONTO BRASILEIRO (revelação com a rolagem) -->
+  <section class="ponto" id="ponto-brasileiro">
+    <div class="ponto__palco">
+      <svg class="ponto__desenho" viewBox="0 0 400 400" aria-hidden="true">
+        <path id="pb-a" d="M200 20 L380 200 L200 380 L20 200 Z"/>
+        <path id="pb-b" d="M235 20 L415 200 L235 380 L55 200 Z"/>
+        <circle id="pb-c" cx="217.5" cy="200" r="10"/>
+      </svg>
+      <div class="ponto__texto">
+        <p class="sobretitulo">O método da casa</p>
+        <h2 class="ponto__frase" id="frase">Nem todo mega hair é igual. O <em>Ponto Brasileiro</em> nasceu aqui, na Perpetuélle, e só é feito aqui.</h2>
+        <p class="ponto__hist provisorio">Texto provisório: aqui entra a história do Ponto Brasileiro (como nasceu, o que o torna único e para quem é indicado), com as palavras da dona.</p>
+        <a href="#agendar" class="btn btn--cobre ponto__cta">Quero o Ponto Brasileiro</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONTE SEU MEGA HAIR (envia a ideia para avaliação no WhatsApp) -->
+  <section class="monte" id="mega-hair">
+    <div class="cabeca revela">
+      <p class="sobretitulo">Monte seu mega hair</p>
+      <h2>Do seu jeito, <em>em três escolhas.</em></h2>
+      <p>Escolha o método, o comprimento e a cor. Sua ideia chega pronta no nosso WhatsApp e a gente marca a sua avaliação.</p>
+    </div>
+
+    <form class="monte__grade" id="monte" onsubmit="return false">
+      <div class="monte__passos">
+        <fieldset class="passo revela">
+          <legend><span>1</span>Método de fixação</legend>
+          <div class="opcoes">
+            <label class="opcao"><input type="radio" name="metodo" value="Ponto Brasileiro" checked><span><b>Ponto Brasileiro</b><small>Exclusivo da casa</small></span></label>
+            <label class="opcao"><input type="radio" name="metodo" value="Quero orientação sobre o método"><span><b>Quero orientação</b><small>A gente indica na avaliação</small></span></label>
+          </div>
+          <p class="provisorio">Outros métodos de fixação entram aqui (lista a receber do salão).</p>
+        </fieldset>
+
+        <fieldset class="passo revela">
+          <legend><span>2</span>Comprimento</legend>
+          <div class="opcoes opcoes--4">
+            <label class="opcao"><input type="radio" name="comprimento" value="Médio"><span><b>Médio</b></span></label>
+            <label class="opcao"><input type="radio" name="comprimento" value="Longo" checked><span><b>Longo</b></span></label>
+            <label class="opcao"><input type="radio" name="comprimento" value="Extra longo"><span><b>Extra longo</b></span></label>
+            <label class="opcao"><input type="radio" name="comprimento" value="Ainda não sei"><span><b>Não sei</b></span></label>
+          </div>
+          <p class="nota-exemplo">Opções de exemplo: as medidas reais (em cm) vêm do salão.</p>
+        </fieldset>
+
+        <fieldset class="passo revela">
+          <legend><span>3</span>Cor</legend>
+          <div class="opcoes">
+            <label class="opcao"><input type="radio" name="cor" value="Natural, igual ao meu cabelo" checked><span><b>Natural</b><small>Igual ao meu cabelo</small></span></label>
+            <label class="opcao"><input type="radio" name="cor" value="Mais claro / com mechas"><span><b>Mais claro</b><small>Com mechas ou iluminado</small></span></label>
+            <label class="opcao"><input type="radio" name="cor" value="Mudar a cor"><span><b>Mudar a cor</b><small>Uma transformação</small></span></label>
+            <label class="opcao"><input type="radio" name="cor" value="Quero orientação sobre a cor"><span><b>Quero orientação</b><small>A gente indica</small></span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <aside class="resumo revela">
+        <svg class="resumo__losango" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 L98 50 L50 98 L2 50 Z"/><path d="M58 2 L106 50 L58 98 L10 50 Z"/></svg>
+        <p class="sobretitulo">Seu mega hair</p>
+        <dl>
+          <div><dt>Método</dt><dd id="r-metodo">Ponto Brasileiro</dd></div>
+          <div><dt>Comprimento</dt><dd id="r-comprimento">Longo</dd></div>
+          <div><dt>Cor</dt><dd id="r-cor">Natural, igual ao meu cabelo</dd></div>
+        </dl>
+        <label class="campo"><span>Seu nome</span><input type="text" id="r-nome" autocomplete="given-name" placeholder="Como podemos te chamar?"></label>
+        <button type="button" class="btn btn--cobre" id="enviar-monte">Enviar para avaliação</button>
+        <p class="resumo__obs">Abre o WhatsApp com a mensagem pronta. Se puder, mande uma foto do seu cabelo hoje.</p>
+      </aside>
+    </form>
+  </section>
+
+  <!-- ANTES E DEPOIS -->
+  <section class="ad-sec" id="antes-depois">
+    <div class="ad-sec__texto revela">
+      <p class="sobretitulo">Antes e depois</p>
+      <h2>Arraste e veja <em>a transformação.</em></h2>
+      <p>Resultados reais das nossas clientes, com o Ponto Brasileiro.</p>
+      <p class="provisorio">As ilustrações ao lado serão trocadas por fotos reais de antes e depois, com autorização das clientes.</p>
+    </div>
+    <div class="ad revela" id="ad" style="--pos:50%">
+      <canvas class="ad__img" id="ad-antes" aria-hidden="true"></canvas>
+      <canvas class="ad__img ad__img--depois" id="ad-depois" aria-hidden="true"></canvas>
+      <span class="ad__tag">Antes</span><span class="ad__tag ad__tag--depois">Depois</span>
+      <span class="ad__linha" aria-hidden="true"><i></i></span>
+      <input type="range" min="0" max="100" value="50" id="ad-range" aria-label="Comparar antes e depois">
+    </div>
+  </section>
+
+  <!-- EQUIPE -->
+  <section class="equipe" id="equipe">
+    <div class="cabeca revela">
+      <p class="sobretitulo">Equipe</p>
+      <h2>Quem <em>assina</em> o seu cabelo.</h2>
+      <p>Conheça cada profissional e o portfólio dela, separado por serviço.</p>
+    </div>
+    <div class="equipe__grade">
+      <article class="membro revela"><div class="membro__foto"><span>Foto</span></div><h3>Nome da profissional</h3><p>Especialidades a receber</p><span class="membro__link">Portfólio em breve</span></article>
+      <article class="membro revela" style="--d:.1s"><div class="membro__foto"><span>Foto</span></div><h3>Nome da profissional</h3><p>Especialidades a receber</p><span class="membro__link">Portfólio em breve</span></article>
+      <article class="membro revela" style="--d:.2s"><div class="membro__foto"><span>Foto</span></div><h3>Nome da profissional</h3><p>Especialidades a receber</p><span class="membro__link">Portfólio em breve</span></article>
+    </div>
+    <p class="provisorio equipe__nota revela">Aguardando do salão: nome, foto e especialidades de cada profissional, mais fotos do portfólio de cada uma.</p>
+  </section>
+
+  <!-- TUELLE HAIR: linha própria do salão (produtos da coleção "Mais Vendidos" da loja oficial) -->
+  <section class="tuelle" id="tuelle-hair">
+    <div class="tuelle__topo revela">
+      <div>
+        <p class="sobretitulo">Nossa linha própria</p>
+        <h2>Tuelle <em>Hair</em></h2>
+      </div>
+      <div class="tuelle__intro">
+        <p>A Perpetuélle tem a sua própria linha de produtos. Conheça os mais vendidos e compre direto na loja oficial.</p>
+        <a href="https://tuellehair.com.br/" target="_blank" rel="noopener" class="btn btn--linha">Visitar a loja</a>
+      </div>
+    </div>
+
+    <div class="tuelle__grade">
+      <a class="produto produto--destaque revela" href="https://tuellehair.com.br/products/gloss-mascara" target="_blank" rel="noopener">
+        <img src="assets/img/tuelle/gloss-restore.jpg" alt="Gloss Restore Máscara, da Tuelle Hair" width="1000" height="1000" loading="lazy">
+        <span class="produto__info"><b>Gloss Restore</b><small>Máscara · 200ml</small><i>Ver na loja</i></span>
+      </a>
+      <a class="produto revela" style="--d:.08s" href="https://tuellehair.com.br/products/ativador-new-curls-300ml-tuelle-hair" target="_blank" rel="noopener">
+        <img src="assets/img/tuelle/ativador-new-curls.jpg" alt="Ativador New Curls 300ml, da Tuelle Hair" width="720" height="720" loading="lazy">
+        <span class="produto__info"><b>Ativador New Curls</b><small>300ml</small><i>Ver na loja</i></span>
+      </a>
+      <a class="produto revela" style="--d:.16s" href="https://tuellehair.com.br/products/spray-golden-curls-tuelle-hair" target="_blank" rel="noopener">
+        <img src="assets/img/tuelle/mascara-liquida-golden-curls.jpg" alt="Máscara Líquida Golden Curls, da Tuelle Hair" width="720" height="720" loading="lazy">
+        <span class="produto__info"><b>Máscara Líquida Golden Curls</b><small>Nutritiva e hidratante · 177ml</small><i>Ver na loja</i></span>
+      </a>
+      <a class="produto revela" style="--d:.08s" href="https://tuellehair.com.br/products/acidificante-tuelle-hair-500ml" target="_blank" rel="noopener">
+        <img src="assets/img/tuelle/acidificante-new-curls.jpg" alt="Acidificante New Curls 500ml, da Tuelle Hair" width="720" height="720" loading="lazy">
+        <span class="produto__info"><b>Acidificante New Curls</b><small>500ml</small><i>Ver na loja</i></span>
+      </a>
+      <a class="produto revela" style="--d:.16s" href="https://tuellehair.com.br/products/perfume-capilar-autentica-100ml-tuelle-hair" target="_blank" rel="noopener">
+        <img src="assets/img/tuelle/perfume-autentica.jpg" alt="Perfume Capilar Autêntica, da Tuelle Hair" width="720" height="720" loading="lazy">
+        <span class="produto__info"><b>Autêntica</b><small>Perfume capilar · 100ml</small><i>Ver na loja</i></span>
+      </a>
+    </div>
+
+    <p class="provisorio tuelle__nota revela">Espaço reservado: quais produtos a Perpetuélle indica para quem usa mega hair (a dona define as indicações).</p>
+  </section>
+
+  <!-- DÚVIDAS -->
+  <section class="duvidas" id="duvidas">
+    <div class="cabeca revela">
+      <p class="sobretitulo">Dúvidas frequentes</p>
+      <h2>Antes de <em>marcar.</em></h2>
+    </div>
+    <div class="duvidas__lista revela">
+      <details><summary>Quanto tempo dura o Ponto Brasileiro?</summary><p class="provisorio">Resposta a receber do salão.</p></details>
+      <details><summary>De quanto em quanto tempo preciso fazer manutenção?</summary><p class="provisorio">Resposta a receber do salão.</p></details>
+      <details><summary>Posso pintar ou fazer mechas no mega hair?</summary><p class="provisorio">Resposta a receber do salão.</p></details>
+      <details><summary>Preciso fazer uma avaliação antes?</summary><p class="provisorio">Resposta a receber do salão.</p></details>
+      <details><summary>Quanto custa?</summary><p class="provisorio">Resposta a receber do salão (valores ou "a partir de", como a dona preferir).</p></details>
+      <details><summary>Como cuidar do mega hair em casa?</summary><p class="provisorio">Resposta a receber do salão, com as indicações da linha Tuelle Hair.</p></details>
+    </div>
+  </section>
+
+  <!-- CONTATO / AGENDAR -->
+  <section class="contato" id="agendar">
+    <div class="contato__caixa revela">
+      <svg class="contato__linhas" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M300 -40 L640 300 L300 640 L-40 300 Z"/><path d="M350 -40 L690 300 L350 640 L10 300 Z"/></svg>
+      <p class="sobretitulo">Agendar</p>
+      <h2>Vamos marcar a <em>sua avaliação?</em></h2>
+      <p>O agendamento online chega em breve. Por enquanto, fale com a gente pelo WhatsApp.</p>
+      <div class="contato__acoes">
+        <a class="btn btn--cobre" id="whats-contato" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        <a class="btn btn--linha" href="#" aria-disabled="true">Instagram</a>
+      </div>
+    </div>
+    <div class="contato__info revela">
+      <div><p class="sobretitulo">Endereço</p><p class="provisorio">A receber do salão</p></div>
+      <div><p class="sobretitulo">Horário</p><p class="provisorio">A receber do salão</p></div>
+      <div><p class="sobretitulo">WhatsApp e Instagram</p><p class="provisorio">Número e @ a receber</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape-site">
+  <a href="#topo" class="nav__marca" aria-label="Voltar ao início">
+    <svg viewBox="0 0 40 40" class="nav__emblema" aria-hidden="true"><path d="M20 3 L37 20 L20 37 L3 20 Z"/><path d="M25 3 L42 20 L25 37 L8 20 Z" opacity=".55"/><circle cx="22.5" cy="11" r="2"/></svg>
+    <span>Perpetuélle</span>
+  </a>
+  <nav class="rodape-site__links">
+    <a href="#ponto-brasileiro">Ponto Brasileiro</a><a href="#mega-hair">Mega Hair</a><a href="#equipe">Equipe</a>
+    <a href="https://tuellehair.com.br/" target="_blank" rel="noopener">Tuelle Hair</a><a href="#duvidas">Dúvidas</a>
+  </nav>
+  <p class="rodape-site__copy">© 2026 Studio Perpetuélle · Mega Hair · Cabelos</p>
+</footer>
+
+<a href="#agendar" class="agendar-fixo" id="agendar-fixo">Agendar avaliação</a>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
