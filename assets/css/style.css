@@ -258,6 +258,31 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
 .etapa h3{margin-top:20px;font-family:var(--serif);font-weight:500;font-size:clamp(24px,2vw,30px)}
 .etapa p{margin-top:8px;color:var(--suave);font-size:16px}
 
+/* TRADIÇÃO */
+.tradicao{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(36px,6vw,100px);align-items:center;
+  padding:clamp(80px,10vw,140px) var(--gutter);border-top:1px solid rgba(198,148,67,.2);
+  background:radial-gradient(60% 70% at 20% 40%,#17110a,transparent 70%),#000}
+.tradicao__foto{position:relative;width:min(100%,460px);justify-self:center;padding:22px}
+.tradicao__moldura{position:relative;aspect-ratio:4/5;display:grid;place-items:center;text-align:center;border:1.5px dashed var(--cobre-linha);
+  background:linear-gradient(160deg,#1a140d,#0b0a0a)}
+.tradicao__moldura span{font-size:12px;font-weight:700;letter-spacing:.22em;line-height:1.9;text-transform:uppercase;color:var(--suave)}
+.tradicao__losangos{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--cobre);stroke-width:.35;opacity:.55;overflow:visible;pointer-events:none}
+.tradicao__texto h2{margin-top:16px;font-family:var(--serif);font-weight:500;font-size:clamp(36px,4.4vw,62px);line-height:1.05;letter-spacing:-.015em}
+.tradicao__numero{margin-top:28px;display:flex;align-items:flex-start;gap:6px;line-height:1}
+.tradicao__numero b{font-family:var(--serif);font-weight:500;font-size:clamp(88px,10vw,150px);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px var(--cobre);font-variant-numeric:tabular-nums}
+.tradicao__numero span{display:flex;flex-direction:column;gap:14px;padding-top:.2em;font-family:var(--serif);font-size:clamp(40px,4vw,60px);color:var(--cobre-claro)}
+.tradicao__numero small{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.2em;line-height:1.7;text-transform:uppercase;color:var(--suave)}
+.tradicao__lead{margin-top:24px;max-width:560px;color:var(--suave);font-size:18px}
+.tradicao__lead strong{color:var(--branco);font-weight:700}
+.tradicao blockquote{margin-top:22px;max-width:560px;font-family:var(--serif);font-style:italic;font-size:18px}
+.marcos{list-style:none;margin-top:32px;max-width:560px;border-left:1.5px solid rgba(198,148,67,.35)}
+.marcos li{position:relative;padding:0 0 22px 26px}
+.marcos li:last-child{padding-bottom:0}
+.marcos li::before{content:"";position:absolute;left:-6px;top:6px;width:10px;height:10px;background:#000;border:1.5px solid var(--cobre);transform:rotate(45deg)}
+.marcos li:last-child::before{background:var(--cobre)}
+.marcos b{display:block;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre)}
+.marcos span{display:block;margin-top:4px;font-family:var(--serif);font-size:19px}
+
 /* CELULAR */
 @media (max-width:900px){
   .nav__menu{display:block}
@@ -309,6 +334,8 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
   .etapa{width:auto;padding-top:0}
   .etapa::before{top:6px;left:-34px}
   .etapa__num{position:static;display:block;margin-bottom:12px;padding:0;background:none;font-size:36px}
+  .tradicao{grid-template-columns:minmax(0,1fr)}
+  .tradicao__foto{width:min(100%,320px)}
   .ponto{height:220vh}
   .ponto__palco{grid-template-columns:minmax(0,1fr);align-content:center;gap:18px;padding-top:84px;text-align:center}
   .ponto__desenho{width:min(48vw,220px)}

@@ -228,6 +228,19 @@
   addEventListener('resize', () => { medeJornada(); rolaJornada(); });
   addEventListener('scroll', rolaJornada, {passive: true});
 
+  /* tradição: contador 0 → 15 quando aparece na tela */
+  const contador = document.getElementById('contador');
+  if (!reduz) {
+    contador.textContent = '0';
+    new IntersectionObserver(([e], o) => {
+      if (!e.isIntersecting) return; o.disconnect();
+      const ate = +contador.dataset.ate, t0 = performance.now(), dur = 1600;
+      const passo = t => { const p = clamp((t - t0) / dur), ease = 1 - Math.pow(1 - p, 3);
+        contador.textContent = Math.round(ease * ate); if (p < 1) requestAnimationFrame(passo); };
+      requestAnimationFrame(passo);
+    }, {threshold: .6}).observe(contador);
+  }
+
   /* botão fixo de agendar (celular): aparece depois da abertura e some no contato */
   const fixo = document.getElementById('agendar-fixo'), contato = document.getElementById('agendar');
   function botaoFixo() {
