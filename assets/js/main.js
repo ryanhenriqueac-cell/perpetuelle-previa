@@ -150,9 +150,10 @@
   document.querySelectorAll('.revela').forEach(el => obs.observe(el));
 
   /* WhatsApp do salão: preencher com DDI+DDD+número (ex.: 5551999999999) quando o salão enviar */
-  const WHATSAPP = '';
+  const WHATSAPP = '5531988682189';   // (31) 98868-2189, confirmado pelo Ryan em 23/11
   const linkWhats = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   document.getElementById('whats-contato').href = linkWhats('Olá! Vim pelo site da Perpetuélle e quero agendar uma avaliação.');
+  document.getElementById('whats-numero').href = linkWhats('Olá! Vim pelo site da Perpetuélle.');
 
   /* transformações: antes e depois + mosaico (ilustrações até chegarem as fotos reais) */
   const ad = document.getElementById('ad'), adR = document.getElementById('ad-range');

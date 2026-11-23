@@ -199,10 +199,13 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
 
 /* EQUIPE */
 .equipe{padding:clamp(80px,10vw,140px) var(--gutter);border-top:1px solid rgba(198,148,67,.2)}
-.equipe__grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.equipe__grade{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
 .membro__foto{position:relative;aspect-ratio:1;display:grid;place-items:center;border:1.5px dashed var(--cobre-linha);background:
   linear-gradient(135deg,transparent 49.6%,rgba(198,148,67,.18) 50%,transparent 50.4%),var(--card)}
-.membro__foto span{font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--suave)}
+.membro__foto span{font-family:var(--serif);font-size:clamp(44px,4vw,64px);color:transparent;-webkit-text-stroke:1px var(--cobre)}
+.membro--dona .membro__foto{border-style:solid;border-color:var(--cobre)}
+.contato__dado{margin-top:10px;font-family:var(--serif);font-size:19px;line-height:1.55}
+.contato__dado a{color:var(--cobre-claro);text-decoration:underline;text-underline-offset:4px}
 .membro h3{margin-top:18px;font-family:var(--serif);font-weight:500;font-size:24px}
 .membro p{color:var(--suave);font-size:15px}
 .membro__link{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre)}
@@ -355,6 +358,7 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
   .opcao--img b{padding:10px 10px;font-size:14px}
   .resumo{position:relative;top:0}
   .equipe__grade{grid-template-columns:minmax(0,1fr)}
+  .membro__foto span{font-size:40px}
   .membro{display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:center}
   .membro__foto{grid-row:span 3}
   .membro h3{margin-top:0;font-size:21px}
