@@ -149,6 +149,10 @@
   const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visto'); obs.unobserve(e.target); } }), {threshold: .15});
   document.querySelectorAll('.revela').forEach(el => obs.observe(el));
 
+  /* Agendamento: por enquanto na página do salão no Trinks. Quando o nosso sistema estiver pronto, trocar só esta linha. */
+  const AGENDAR_URL = 'https://www.trinks.com/studio-perpetuelle-mega-hair-cabelos';
+  document.querySelectorAll('[data-agendar]').forEach(a => { a.href = AGENDAR_URL; });
+
   /* WhatsApp do salão: preencher com DDI+DDD+número (ex.: 5551999999999) quando o salão enviar */
   const WHATSAPP = '5531988682189';   // (31) 98868-2189, confirmado pelo Ryan em 23/11
   const linkWhats = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
