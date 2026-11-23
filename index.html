@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Studio Perpetuélle · Mega Hair</title>
-<meta name="description" content="Studio Perpetuélle, especialista em mega hair. Conheça o Ponto Brasileiro, método de fixação exclusivo criado pela casa.">
+<meta name="description" content="Studio Perpetuélle, especialista em cabelos cacheados e mega hair em Belo Horizonte. Conheça o Ponto Brasileiro, método de fixação exclusivo da casa.">
 <meta name="theme-color" content="#000000">
 <!-- PRÉVIA: remover o noindex quando o site for lançado -->
 <meta name="robots" content="noindex, nofollow">
@@ -23,6 +23,7 @@
     <span>Perpetuélle</span>
   </a>
   <nav class="nav__links" id="menu">
+    <a href="#transformacoes">Transformações</a>
     <a href="#ponto-brasileiro">Ponto Brasileiro</a>
     <a href="#mega-hair">Mega Hair</a>
     <a href="#equipe">Equipe</a>
@@ -41,12 +42,12 @@
     </svg>
 
     <div class="hero__texto">
-      <p class="sobretitulo entra" style="--d:.1s">Studio Perpetuélle · Mega Hair</p>
-      <h1 class="entra" style="--d:.25s">Mega hair com assinatura: <em>Ponto Brasileiro.</em></h1>
-      <p class="hero__sub entra" style="--d:.45s">Um método de fixação criado aqui, exclusivo da casa. Cabelo longo, do seu jeito, nas mãos de quem inventou a técnica.</p>
+      <p class="sobretitulo entra" style="--d:.1s">Studio Perpetuélle · Belo Horizonte</p>
+      <h1 class="entra" style="--d:.25s">Mega hair cacheado com assinatura: <em>Ponto Brasileiro.</em></h1>
+      <p class="hero__sub entra" style="--d:.45s">Especialistas em cabelos cacheados há mais de 15 anos. O cabelo, o método e a transformação: tudo feito aqui, do jeito que você sonhou.</p>
       <div class="hero__acoes entra" style="--d:.6s">
         <a href="#agendar" class="btn btn--cobre">Agendar avaliação</a>
-        <a href="#ponto-brasileiro" class="btn btn--linha">Conhecer o método</a>
+        <a href="#transformacoes" class="btn btn--linha">Ver transformações</a>
       </div>
     </div>
 
@@ -65,16 +66,41 @@
       <span class="janela__ponto janela__ponto--b"></span>
     </div>
 
-    <a href="#ponto-brasileiro" class="hero__rolar" aria-label="Rolar para o Ponto Brasileiro"><span></span></a>
+    <a href="#transformacoes" class="hero__rolar" aria-label="Rolar para as transformações"><span></span></a>
   </section>
 
   <!-- FAIXA -->
   <div class="faixa" aria-hidden="true">
     <div class="faixa__trilho">
-      <span>Ponto Brasileiro</span><i></i><span>Mega Hair</span><i></i><span>Exclusivo da casa</span><i></i><span>Tuelle Hair</span><i></i>
-      <span>Ponto Brasileiro</span><i></i><span>Mega Hair</span><i></i><span>Exclusivo da casa</span><i></i><span>Tuelle Hair</span><i></i>
+      <span>Cabelos cacheados</span><i></i><span>Mega hair</span><i></i><span>Ponto Brasileiro</span><i></i><span>Transformação</span><i></i><span>Tuelle Hair</span><i></i>
+      <span>Cabelos cacheados</span><i></i><span>Mega hair</span><i></i><span>Ponto Brasileiro</span><i></i><span>Transformação</span><i></i><span>Tuelle Hair</span><i></i>
     </div>
   </div>
+
+  <!-- TRANSFORMAÇÕES (logo após a abertura: é o que mais vende) -->
+  <section class="transf" id="transformacoes">
+    <div class="cabeca revela">
+      <p class="sobretitulo">Transformações</p>
+      <h2>Do espelho de antes <em>ao cacho dos sonhos.</em></h2>
+      <p>Resultados de clientes da Perpetuélle: mega hair cacheado com o Ponto Brasileiro, do jeito que cada uma sonhou.</p>
+    </div>
+    <div class="transf__grade">
+      <div class="ad revela" id="ad" style="--pos:50%">
+        <canvas class="ad__img" id="ad-antes" aria-hidden="true"></canvas>
+        <canvas class="ad__img ad__img--depois" id="ad-depois" aria-hidden="true"></canvas>
+        <span class="ad__tag">Antes</span><span class="ad__tag ad__tag--depois">Depois</span>
+        <span class="ad__linha" aria-hidden="true"><i></i></span>
+        <input type="range" min="0" max="100" value="50" id="ad-range" aria-label="Comparar antes e depois">
+      </div>
+      <div class="mosaico">
+        <figure class="revela"><canvas data-cachos="mel" aria-hidden="true"></canvas><figcaption>Foto real a receber</figcaption></figure>
+        <figure class="revela" style="--d:.08s"><canvas data-cachos="preto" aria-hidden="true"></canvas><figcaption>Foto real a receber</figcaption></figure>
+        <figure class="revela" style="--d:.16s"><canvas data-cachos="cobre" aria-hidden="true"></canvas><figcaption>Foto real a receber</figcaption></figure>
+        <figure class="revela" style="--d:.24s"><canvas data-cachos="castanho" aria-hidden="true"></canvas><figcaption>Foto real a receber</figcaption></figure>
+      </div>
+    </div>
+    <p class="provisorio transf__nota revela">As ilustrações serão trocadas pelas fotos reais de antes e depois (com autorização das clientes) e pelos vídeos de transformação.</p>
+  </section>
 
   <!-- PONTO BRASILEIRO (revelação com a rolagem) -->
   <section class="ponto" id="ponto-brasileiro">
@@ -147,23 +173,6 @@
         <p class="resumo__obs">Abre o WhatsApp com a mensagem pronta. Se puder, mande uma foto do seu cabelo hoje.</p>
       </aside>
     </form>
-  </section>
-
-  <!-- ANTES E DEPOIS -->
-  <section class="ad-sec" id="antes-depois">
-    <div class="ad-sec__texto revela">
-      <p class="sobretitulo">Antes e depois</p>
-      <h2>Arraste e veja <em>a transformação.</em></h2>
-      <p>Resultados reais das nossas clientes, com o Ponto Brasileiro.</p>
-      <p class="provisorio">As ilustrações ao lado serão trocadas por fotos reais de antes e depois, com autorização das clientes.</p>
-    </div>
-    <div class="ad revela" id="ad" style="--pos:50%">
-      <canvas class="ad__img" id="ad-antes" aria-hidden="true"></canvas>
-      <canvas class="ad__img ad__img--depois" id="ad-depois" aria-hidden="true"></canvas>
-      <span class="ad__tag">Antes</span><span class="ad__tag ad__tag--depois">Depois</span>
-      <span class="ad__linha" aria-hidden="true"><i></i></span>
-      <input type="range" min="0" max="100" value="50" id="ad-range" aria-label="Comparar antes e depois">
-    </div>
   </section>
 
   <!-- EQUIPE -->
@@ -262,7 +271,7 @@
     <span>Perpetuélle</span>
   </a>
   <nav class="rodape-site__links">
-    <a href="#ponto-brasileiro">Ponto Brasileiro</a><a href="#mega-hair">Mega Hair</a><a href="#equipe">Equipe</a>
+    <a href="#transformacoes">Transformações</a><a href="#ponto-brasileiro">Ponto Brasileiro</a><a href="#mega-hair">Mega Hair</a><a href="#equipe">Equipe</a>
     <a href="https://tuellehair.com.br/" target="_blank" rel="noopener">Tuelle Hair</a><a href="#duvidas">Dúvidas</a>
   </nav>
   <p class="rodape-site__copy">© 2026 Studio Perpetuélle · Mega Hair · Cabelos</p>

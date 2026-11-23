@@ -129,8 +129,8 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
 
 /* PADRÕES DE SEÇÃO */
 .cabeca{max-width:720px;margin-bottom:clamp(36px,5vw,60px)}
-.cabeca h2,.ad-sec h2,.contato h2{margin-top:16px;font-family:var(--serif);font-weight:500;font-size:clamp(36px,4.6vw,64px);line-height:1.05;letter-spacing:-.015em}
-.cabeca > p:last-child,.ad-sec__texto > p:not(.sobretitulo):not(.provisorio){margin-top:18px;color:var(--suave);max-width:560px}
+.cabeca h2,.contato h2{margin-top:16px;font-family:var(--serif);font-weight:500;font-size:clamp(36px,4.6vw,64px);line-height:1.05;letter-spacing:-.015em}
+.cabeca > p:last-child{margin-top:18px;color:var(--suave);max-width:560px}
 .nota-exemplo{margin-top:12px;font-size:13px;color:var(--suave);font-style:italic}
 
 /* MONTE SEU MEGA HAIR */
@@ -165,10 +165,17 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
 .resumo .btn{margin-top:18px;width:100%}
 .resumo__obs{margin-top:12px;font-size:14px;color:var(--suave)}
 
-/* ANTES E DEPOIS */
-.ad-sec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center;padding:clamp(80px,10vw,140px) var(--gutter);background:var(--grafite);border-top:1px solid rgba(198,148,67,.2)}
-.ad-sec__texto .provisorio{margin-top:24px;max-width:480px}
-.ad{position:relative;aspect-ratio:4/5;width:min(100%,520px);justify-self:center;overflow:hidden;border:1.5px solid var(--cobre-linha);user-select:none;touch-action:pan-y}
+/* TRANSFORMAÇÕES */
+.transf{padding:clamp(80px,10vw,140px) var(--gutter);border-top:1px solid rgba(198,148,67,.2)}
+.transf__grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,1.6vw,20px)}
+.mosaico{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.mosaico figure{position:relative;aspect-ratio:4/5;overflow:hidden;border:1.5px solid rgba(198,148,67,.22)}
+.mosaico canvas{width:100%;height:100%;display:block;transition:transform 1.2s var(--ease)}
+.mosaico figure:hover canvas{transform:scale(1.05)}
+.mosaico figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--suave);background:linear-gradient(transparent,rgba(0,0,0,.8))}
+.transf__nota{margin-top:24px;max-width:640px}
+.ad{position:relative;aspect-ratio:4/5;width:100%;overflow:hidden;border:1.5px solid var(--cobre-linha);user-select:none;touch-action:pan-y}
 .ad__img{position:absolute;inset:0;width:100%;height:100%;display:block}
 .ad__img--depois{clip-path:inset(0 0 0 var(--pos))}
 .ad__tag{position:absolute;top:16px;left:16px;padding:6px 12px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:rgba(0,0,0,.7);color:var(--branco)}
@@ -245,7 +252,7 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
   .produto:not(.produto--destaque) .produto__info{position:static;padding:12px 2px 6px}
   .produto:not(.produto--destaque) .produto__info b{font-size:18px}
   .produto__info i{opacity:1;transform:none}
-  .monte__grade,.ad-sec,.duvidas{grid-template-columns:minmax(0,1fr)}
+  .monte__grade,.transf__grade,.duvidas{grid-template-columns:minmax(0,1fr)}
   .opcoes--4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .resumo{position:relative;top:0}
   .equipe__grade{grid-template-columns:minmax(0,1fr)}

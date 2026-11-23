@@ -1,4 +1,4 @@
-/* Studio Perpetuélle · proposta de abertura v1 */
+/* Studio Perpetuélle · prévia do site */
 (() => {
   const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -14,38 +14,98 @@
     menu.classList.remove('aberto'); botao.setAttribute('aria-expanded', false); document.body.style.overflow = '';
   }));
 
-  /* fios animados dentro do losango */
-  const canvas = document.getElementById('fios'), ctx = canvas.getContext('2d');
-  const CORES = ['#F3D9A6', '#E2BC7E', '#C99A5C', '#A8784A', '#FBEBC8', '#8A5636', '#C68E5E', '#DDAA77', '#5A3423', '#6B4A2E'];
-  let W = 0, H = 0, fios = [];
-  let semente = 11; const rnd = () => (semente = (semente * 16807) % 2147483647) / 2147483647;
-  function prepara() {
-    const dpr = Math.min(devicePixelRatio || 1, 2), r = canvas.getBoundingClientRect();
-    W = r.width; H = r.height; canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    semente = 11; const n = Math.round(clamp(W * .75, 160, 420));
-    fios = Array.from({length: n}, () => ({
-      x: -W * .2 + rnd() * W * 1.4, cor: CORES[Math.floor(rnd() * CORES.length)],
-      w: .5 + rnd() * 1.9, a: .3 + rnd() * .65, f: rnd() * Math.PI * 2, amp: .6 + rnd() * .8
-    }));
-  }
-  function desenha(t) {
-    const g = ctx.createLinearGradient(0, 0, W, H);
-    g.addColorStop(0, '#9C6E3E'); g.addColorStop(.5, '#5C3A22'); g.addColorStop(1, '#22150D');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    const A = W * .09, s = t * .00045;
-    for (const f of fios) {
-      const o1 = Math.sin(s + f.f) * A * .35 * f.amp, o2 = Math.cos(s * .8 + f.f) * A * .3 * f.amp;
-      ctx.beginPath(); ctx.moveTo(f.x, -20);
-      ctx.bezierCurveTo(f.x + A + o1, H * .3, f.x - A + o2, H * .62, f.x + A * .5 + o1 * .5, H + 20);
-      ctx.strokeStyle = f.cor; ctx.globalAlpha = f.a; ctx.lineWidth = f.w; ctx.stroke();
+  /* ===== cachos: ilustração no lugar das fotos/vídeos reais (até chegarem) ===== */
+  const rng = s => () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const PALETAS = {
+    mel:      {fundo: ['#4a2e18', '#1c1009'], cores: ['#F3D9A6', '#E2BC7E', '#C99A5C', '#A8784A', '#FBEBC8', '#DDAA77']},
+    castanho: {fundo: ['#3a2415', '#140b06'], cores: ['#A9714A', '#C68E5E', '#8A5636', '#DDAA77', '#6B4A2E']},
+    preto:    {fundo: ['#221c1d', '#0a0809'], cores: ['#4A3E41', '#6B5C5F', '#2F2628', '#8C7C7E', '#3a3033']},
+    cobre:    {fundo: ['#4a2210', '#180a04'], cores: ['#C8693A', '#E08A55', '#A4512A', '#F0A877', '#7E3A1C']},
+    antes:    {fundo: ['#1c1714', '#0b0908'], cores: ['#6B4A2E', '#8A5636', '#5A3423', '#7a5a3e']}
+  };
+  function criaCachos(W, H, {seed, comp = 1, cores, escala = 1}) {
+    const r = rng(seed), base = Math.max(7, W * .042 * escala), lista = [];
+    for (const camada of [0, 1]) {               // 0 = fundo (mais escuro e transparente), 1 = frente
+      const n = Math.ceil((W + base * 2) / (base * (camada ? 1.5 : 1.8)));
+      for (let i = 0; i < n; i++) {
+        const A = base * (.65 + r() * .7);
+        lista.push({
+          x: -base + r() * (W + base * 2), A, B: A * (.22 + r() * .22), p: A * (.3 + r() * .14),
+          fase: r() * 6.28, f2: r() * 6.28, f3: r() * 6.28, deriva: A * (.4 + r() * .6),
+          y0: -20 - r() * 50 + (camada ? r() * H * .1 : 0), fim: H * comp * (.78 + r() * .26),
+          fios: Array.from({length: 7}, () => ({
+            dx: (r() - .5) * A * .55, df: (r() - .5) * 1.1, cor: cores[Math.floor(r() * cores.length)],
+            w: .7 + r() * 1.4, a: camada ? .5 + r() * .5 : .18 + r() * .25
+          }))
+        });
+      }
     }
-    ctx.globalAlpha = 1;
+    return lista;
+  }
+  function pintaCachos(c, W, H, cachos, fundo, t = 0) {
+    if (fundo) { const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, fundo[0]); g.addColorStop(1, fundo[1]); c.fillStyle = g; c.fillRect(0, 0, W, H); }
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    for (const k of cachos) {
+      for (const f of k.fios) {
+        c.beginPath();
+        let y = k.y0, th = 0, primeiro = true;
+        while (y < k.fim) {
+          const amp = k.A * (.8 + .3 * Math.sin(th * .13 + k.f2));          // diâmetro do cacho varia
+          const x = k.x + f.dx + k.deriva * Math.sin(th * .05 + k.f3) + amp * Math.sin(th + k.fase + f.df);
+          const yy = y + k.B * Math.cos(th + k.fase + f.df);
+          primeiro ? c.moveTo(x, yy) : c.lineTo(x, yy); primeiro = false;
+          th += .42; y += k.p * .42 * (1 + .25 * Math.sin(th * .07 + k.f3));  // passo do cacho varia
+        }
+        c.strokeStyle = f.cor; c.globalAlpha = f.a; c.lineWidth = f.w; c.stroke();
+      }
+    }
+    c.globalAlpha = 1;
+  }
+  function preparaCanvas(cv) {
+    const r = cv.getBoundingClientRect();
+    if (!r.width) return null;
+    const dpr = Math.min(devicePixelRatio || 1, 2), c = cv.getContext('2d');
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return {c, W: r.width, H: r.height};
+  }
+  function cachosEstaticos(cv, nome, opts = {}) {
+    const p = preparaCanvas(cv); if (!p) return;
+    const pal = PALETAS[nome];
+    pintaCachos(p.c, p.W, p.H, criaCachos(p.W, p.H, {seed: opts.seed || 7, comp: opts.comp || 1.1, escala: opts.escala || 1.3, cores: pal.cores}), pal.fundo);
+  }
+
+  /* abertura: cachos animados dentro do losango.
+     Os cachos são desenhados uma vez em 5 camadas; a cada quadro cada camada só balança (inclinação leve). */
+  const canvas = document.getElementById('fios');
+  let heroC = null, camadas = [];
+  function preparaHero() {
+    heroC = preparaCanvas(canvas); if (!heroC) return;
+    const {W, H} = heroC, dpr = Math.min(devicePixelRatio || 1, 1.5);
+    const todos = criaCachos(W, H, {seed: 11, comp: 1.15, cores: [...PALETAS.mel.cores, ...PALETAS.castanho.cores]});
+    camadas = Array.from({length: 5}, (_, g) => {
+      const off = document.createElement('canvas'); off.width = Math.round(W * dpr); off.height = Math.round(H * dpr);
+      const oc = off.getContext('2d'); oc.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pintaCachos(oc, W, H, todos.filter((_, i) => i % 5 === g), null);
+      return {off, fase: g * 1.3};
+    });
+  }
+  function desenhaHero(t) {
+    if (!heroC) return;
+    const {c, W, H} = heroC, dpr = Math.min(devicePixelRatio || 1, 2), f = PALETAS.castanho.fundo;
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, f[0]); g.addColorStop(1, f[1]);
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    for (const k of camadas) {
+      const balanco = Math.sin(t * .0007 + k.fase) * W * .012, mola = 1 + Math.sin(t * .0011 + k.fase) * .012;
+      c.setTransform(dpr, 0, dpr * balanco / H, dpr * mola, 0, 0);
+      c.drawImage(k.off, 0, 0, W, H);
+    }
   }
   let visivel = true;
   new IntersectionObserver(([e]) => { visivel = e.isIntersecting; }).observe(canvas);
-  function loop(t) { if (visivel) desenha(t); requestAnimationFrame(loop); }
-  prepara(); desenha(0); if (!reduz) requestAnimationFrame(loop);
-  addEventListener('resize', () => { prepara(); desenha(performance.now()); });
+  function loop(t) { if (visivel) desenhaHero(t); requestAnimationFrame(loop); }
+  preparaHero(); desenhaHero(0); if (!reduz) requestAnimationFrame(loop);
+  addEventListener('resize', () => { preparaHero(); desenhaHero(performance.now()); });
 
   /* rolagem: abertura + Ponto Brasileiro */
   const hero = document.getElementById('hero'), ponto = document.getElementById('ponto-brasileiro');
@@ -105,31 +165,15 @@
     window.open(linkWhats(msg), '_blank', 'noopener');
   });
 
-  /* antes e depois (ilustrações até chegarem as fotos reais) */
-  function pintaFios(cv, {seed, comp, fundo, cores}) {
-    const r = cv.getBoundingClientRect();
-    if (!r.width) return;
-    const dpr = Math.min(devicePixelRatio || 1, 2), c = cv.getContext('2d');
-    cv.width = r.width * dpr; cv.height = r.height * dpr; c.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const w = r.width, h = r.height; let sd = seed; const rn = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
-    const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, fundo[0]); g.addColorStop(1, fundo[1]);
-    c.fillStyle = g; c.fillRect(0, 0, w, h);
-    const A = w * .08;
-    for (let i = 0; i < 380; i++) {
-      const x = w * .08 + rn() * w * .84, fim = h * comp * (.86 + rn() * .14);
-      c.beginPath(); c.moveTo(x, -10);
-      c.bezierCurveTo(x + A, fim * .35, x - A, fim * .7, x + A * .4, fim);
-      c.strokeStyle = cores[Math.floor(rn() * cores.length)]; c.globalAlpha = .3 + rn() * .65; c.lineWidth = .5 + rn() * 1.7; c.stroke();
-    }
-    c.globalAlpha = 1;
-  }
+  /* transformações: antes e depois + mosaico (ilustrações até chegarem as fotos reais) */
   const ad = document.getElementById('ad'), adR = document.getElementById('ad-range');
-  function pintaAD() {
-    pintaFios(document.getElementById('ad-antes'), {seed: 5, comp: .38, fundo: ['#1c1714', '#0b0908'], cores: ['#6B4A2E', '#8A5636', '#5A3423', '#A8784A']});
-    pintaFios(document.getElementById('ad-depois'), {seed: 9, comp: 1.08, fundo: ['#2a1d12', '#120c07'], cores: ['#F3D9A6', '#E2BC7E', '#C99A5C', '#A8784A', '#FBEBC8', '#8A5636', '#DDAA77']});
+  function pintaTransf() {
+    cachosEstaticos(document.getElementById('ad-antes'), 'antes', {seed: 5, comp: .42, escala: 1});
+    cachosEstaticos(document.getElementById('ad-depois'), 'mel', {seed: 9, comp: 1.15, escala: 1.25});
+    document.querySelectorAll('canvas[data-cachos]').forEach((cv, i) => cachosEstaticos(cv, cv.dataset.cachos, {seed: 20 + i * 7}));
   }
   adR.addEventListener('input', () => ad.style.setProperty('--pos', adR.value + '%'));
-  pintaAD(); addEventListener('resize', pintaAD);
+  pintaTransf(); addEventListener('resize', pintaTransf);
 
   /* botão fixo de agendar (celular): aparece depois da abertura e some no contato */
   const fixo = document.getElementById('agendar-fixo'), contato = document.getElementById('agendar');
