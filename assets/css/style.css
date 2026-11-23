@@ -238,6 +238,26 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
 /* BOTÃO FIXO (celular) */
 .agendar-fixo{display:none}
 
+/* JORNADA DA TRANSFORMAÇÃO */
+.jornada{position:relative;border-top:1px solid rgba(198,148,67,.2);background:var(--grafite)}
+.jornada__palco{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,4vh,48px);padding:96px 0 48px}
+.jornada__cabeca{padding:0 var(--gutter);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:24px 60px;align-items:end}
+.jornada__cabeca .sobretitulo{grid-column:1/-1}
+.jornada__cabeca h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,4.4vw,62px);line-height:1.05;letter-spacing:-.015em}
+.jornada__trilho{position:relative;padding:0 var(--gutter)}
+.jornada__lista{list-style:none;display:flex;gap:clamp(20px,2.4vw,36px);width:max-content;will-change:transform;transform:translateX(var(--x,0px))}
+.jornada__linha{position:absolute;left:var(--gutter);right:var(--gutter);top:21px;height:1.5px;background:rgba(198,148,67,.22)}
+.jornada__linha i{position:absolute;inset:0;background:var(--cobre);transform-origin:left;transform:scaleX(var(--prog,0))}
+.etapa{position:relative;width:clamp(260px,24vw,340px);padding-top:64px}
+.etapa::before{content:"";position:absolute;top:14px;left:0;width:16px;height:16px;background:#000;border:1.5px solid var(--cobre);transform:rotate(45deg);transition:background .4s}
+.etapa.ativa::before{background:var(--cobre)}
+.etapa__num{position:absolute;top:-6px;left:28px;padding:0 10px;background:var(--grafite);font-family:var(--serif);font-size:44px;line-height:1;color:transparent;-webkit-text-stroke:1px var(--cobre)}
+.etapa__midia{position:relative;aspect-ratio:4/3;overflow:hidden;border:1.5px solid rgba(198,148,67,.25)}
+.etapa__midia canvas{width:100%;height:100%;display:block}
+.etapa__midia small{position:absolute;left:10px;bottom:10px;padding:4px 8px;background:rgba(0,0,0,.65);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--suave)}
+.etapa h3{margin-top:20px;font-family:var(--serif);font-weight:500;font-size:clamp(24px,2vw,30px)}
+.etapa p{margin-top:8px;color:var(--suave);font-size:16px}
+
 /* CELULAR */
 @media (max-width:900px){
   .nav__menu{display:block}
@@ -280,6 +300,15 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
     transform:translateY(120px);transition:transform .45s var(--ease)}
   .agendar-fixo.mostra{transform:none}
   .rodape-site{padding-bottom:100px}
+  .jornada{height:auto!important}
+  .jornada__palco{position:relative;height:auto;padding:80px 0 72px;gap:32px}
+  .jornada__cabeca{grid-template-columns:minmax(0,1fr)}
+  .jornada__lista{flex-direction:column;width:auto;transform:none;gap:36px;padding-left:34px}
+  .jornada__linha{left:calc(var(--gutter) + 7px);right:auto;top:0;bottom:0;width:2px;height:auto}
+  .jornada__linha i{transform-origin:top;transform:scaleY(var(--prog,0))}
+  .etapa{width:auto;padding-top:0}
+  .etapa::before{top:6px;left:-34px}
+  .etapa__num{position:static;display:block;margin-bottom:12px;padding:0;background:none;font-size:36px}
   .ponto{height:220vh}
   .ponto__palco{grid-template-columns:minmax(0,1fr);align-content:center;gap:18px;padding-top:84px;text-align:center}
   .ponto__desenho{width:min(48vw,220px)}

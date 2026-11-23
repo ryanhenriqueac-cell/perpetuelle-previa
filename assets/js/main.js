@@ -199,6 +199,35 @@
     window.open(linkWhats(msg), '_blank', 'noopener');
   });
 
+  /* jornada: no computador a lista desliza na horizontal conforme a rolagem; no celular a linha vertical se preenche */
+  const jornada = document.getElementById('jornada'), trilho = document.getElementById('jornada-trilho');
+  const lista = jornada.querySelector('.jornada__lista'), etapas = [...lista.children], linhaJ = jornada.querySelector('.jornada__linha');
+  const ehCelular = () => innerWidth <= 900;
+  let deslize = 0;
+  function medeJornada() {
+    document.querySelectorAll('canvas[data-etapa]').forEach((cv, i) =>
+      cachosEstaticos(cv, cv.dataset.etapa, {seed: 50 + i * 9, comp: cv.dataset.etapa === 'antes' ? .45 : 1.15, escala: 1.4}));
+    if (ehCelular() || reduz) { jornada.style.height = ''; deslize = 0; lista.style.setProperty('--x', '0px'); return; }
+    deslize = Math.max(0, lista.scrollWidth - trilho.clientWidth + parseFloat(getComputedStyle(trilho).paddingLeft) * 2);
+    jornada.style.height = (innerHeight + deslize) + 'px';
+  }
+  function rolaJornada() {
+    const r = jornada.getBoundingClientRect();
+    let p;
+    if (ehCelular() || reduz) {
+      const rl = linhaJ.getBoundingClientRect();
+      p = clamp((innerHeight * .7 - rl.top) / rl.height);
+    } else {
+      p = deslize ? clamp(-r.top / deslize) : 0;
+      lista.style.setProperty('--x', (-p * deslize).toFixed(1) + 'px');
+    }
+    linhaJ.style.setProperty('--prog', p.toFixed(3));
+    etapas.forEach((e, i) => e.classList.toggle('ativa', p >= i / (etapas.length - 1) - .02));
+  }
+  medeJornada(); rolaJornada();
+  addEventListener('resize', () => { medeJornada(); rolaJornada(); });
+  addEventListener('scroll', rolaJornada, {passive: true});
+
   /* botão fixo de agendar (celular): aparece depois da abertura e some no contato */
   const fixo = document.getElementById('agendar-fixo'), contato = document.getElementById('agendar');
   function botaoFixo() {
