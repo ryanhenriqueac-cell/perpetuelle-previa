@@ -20,17 +20,18 @@
     mel:      {fundo: ['#4a2e18', '#1c1009'], cores: ['#F3D9A6', '#E2BC7E', '#C99A5C', '#A8784A', '#FBEBC8', '#DDAA77']},
     castanho: {fundo: ['#3a2415', '#140b06'], cores: ['#A9714A', '#C68E5E', '#8A5636', '#DDAA77', '#6B4A2E']},
     preto:    {fundo: ['#221c1d', '#0a0809'], cores: ['#4A3E41', '#6B5C5F', '#2F2628', '#8C7C7E', '#3a3033']},
+    loiro:    {fundo: ['#5a4126', '#24180c'], cores: ['#FBEBC8', '#F3D9A6', '#EBCB92', '#E2BC7E', '#FFF4DC']},
     cobre:    {fundo: ['#4a2210', '#180a04'], cores: ['#C8693A', '#E08A55', '#A4512A', '#F0A877', '#7E3A1C']},
     antes:    {fundo: ['#1c1714', '#0b0908'], cores: ['#6B4A2E', '#8A5636', '#5A3423', '#7a5a3e']}
   };
-  function criaCachos(W, H, {seed, comp = 1, cores, escala = 1}) {
+  function criaCachos(W, H, {seed, comp = 1, cores, escala = 1, pMul = 1, BMul = 1}) {
     const r = rng(seed), base = Math.max(7, W * .042 * escala), lista = [];
     for (const camada of [0, 1]) {               // 0 = fundo (mais escuro e transparente), 1 = frente
       const n = Math.ceil((W + base * 2) / (base * (camada ? 1.5 : 1.8)));
       for (let i = 0; i < n; i++) {
         const A = base * (.65 + r() * .7);
         lista.push({
-          x: -base + r() * (W + base * 2), A, B: A * (.22 + r() * .22), p: A * (.3 + r() * .14),
+          x: -base + r() * (W + base * 2), A, B: A * (.22 + r() * .22) * BMul, p: A * (.3 + r() * .14) * pMul,
           fase: r() * 6.28, f2: r() * 6.28, f3: r() * 6.28, deriva: A * (.4 + r() * .6),
           y0: -20 - r() * 50 + (camada ? r() * H * .1 : 0), fim: H * comp * (.78 + r() * .26),
           fios: Array.from({length: 7}, () => ({
@@ -71,7 +72,7 @@
   function cachosEstaticos(cv, nome, opts = {}) {
     const p = preparaCanvas(cv); if (!p) return;
     const pal = PALETAS[nome];
-    pintaCachos(p.c, p.W, p.H, criaCachos(p.W, p.H, {seed: opts.seed || 7, comp: opts.comp || 1.1, escala: opts.escala || 1.3, cores: pal.cores}), pal.fundo);
+    pintaCachos(p.c, p.W, p.H, criaCachos(p.W, p.H, {seed: opts.seed || 7, comp: opts.comp || 1.1, escala: opts.escala || 1.3, pMul: opts.pMul || 1, BMul: opts.BMul || 1, cores: pal.cores}), pal.fundo);
   }
 
   /* abertura: cachos animados dentro do losango.
@@ -153,18 +154,6 @@
   const linkWhats = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   document.getElementById('whats-contato').href = linkWhats('Olá! Vim pelo site da Perpetuélle e quero agendar uma avaliação.');
 
-  /* monte seu mega hair */
-  const form = document.getElementById('monte');
-  const valor = n => form.querySelector(`input[name="${n}"]:checked`)?.value || '';
-  function atualizaResumo() { ['metodo', 'comprimento', 'cor'].forEach(n => { document.getElementById('r-' + n).textContent = valor(n); }); }
-  form.addEventListener('change', atualizaResumo); atualizaResumo();
-  document.getElementById('enviar-monte').addEventListener('click', () => {
-    const nome = document.getElementById('r-nome').value.trim();
-    const msg = `Olá! ${nome ? 'Sou ' + nome + ' e ' : ''}montei meu mega hair no site da Perpetuélle:\n\n` +
-      `• Método: ${valor('metodo')}\n• Comprimento: ${valor('comprimento')}\n• Cor: ${valor('cor')}\n\nGostaria de agendar uma avaliação.`;
-    window.open(linkWhats(msg), '_blank', 'noopener');
-  });
-
   /* transformações: antes e depois + mosaico (ilustrações até chegarem as fotos reais) */
   const ad = document.getElementById('ad'), adR = document.getElementById('ad-range');
   function pintaTransf() {
@@ -174,6 +163,41 @@
   }
   adR.addEventListener('input', () => ad.style.setProperty('--pos', adR.value + '%'));
   pintaTransf(); addEventListener('resize', pintaTransf);
+
+  /* o cabelo: escolha com prévia ilustrada + mensagem pronta no WhatsApp */
+  const form = document.getElementById('monte');
+  const valor = n => form.querySelector(`input[name="${n}"]:checked`)?.value || '';
+  const FORMAS = {
+    Ondulado: {escala: 1.7, pMul: 2.8, BMul: .25},
+    Cacheado: {escala: 1.2, pMul: 1, BMul: 1},
+    Crespo:   {escala: .62, pMul: .75, BMul: 1.4}
+  };
+  const COR_PALETA = {Preto: 'preto', Castanho: 'castanho', Mel: 'mel', Loiro: 'loiro', Acobreado: 'cobre'};
+  const COMP = {'Médio': .62, 'Longo': .9, 'Extra longo': 1.15, 'Ainda não sei': .9};
+  function previaCabelo() {
+    const cv = document.getElementById('previa-cabelo');
+    cachosEstaticos(cv, COR_PALETA[valor('cor')] || 'castanho', {seed: 31, comp: COMP[valor('comprimento')] || .9, ...FORMAS[valor('curvatura')]});
+  }
+  function miniaturas() {
+    document.querySelectorAll('canvas[data-forma]').forEach(cv => {
+      const nome = cv.dataset.forma[0].toUpperCase() + cv.dataset.forma.slice(1);
+      cachosEstaticos(cv, 'castanho', {seed: 13, comp: 1.2, ...FORMAS[nome], escala: FORMAS[nome].escala * 1.6});
+    });
+  }
+  function atualizaResumo() {
+    ['curvatura', 'cor', 'comprimento', 'servico'].forEach(n => { document.getElementById('r-' + n).textContent = valor(n); });
+    previaCabelo();
+  }
+  form.addEventListener('change', atualizaResumo);
+  miniaturas(); atualizaResumo();
+  addEventListener('resize', () => { miniaturas(); previaCabelo(); });
+  document.getElementById('enviar-monte').addEventListener('click', () => {
+    const nome = document.getElementById('r-nome').value.trim();
+    const msg = `Olá! ${nome ? 'Sou ' + nome + ' e ' : ''}montei meu cabelo no site da Perpetuélle:\n\n` +
+      `• Curvatura: ${valor('curvatura')}\n• Cor: ${valor('cor')}\n• Comprimento: ${valor('comprimento')}\n• Quero: ${valor('servico')}\n\n` +
+      (valor('servico') === 'Só o cabelo' ? 'Gostaria de saber os valores e como comprar no salão.' : 'Gostaria de saber os valores e marcar uma avaliação.');
+    window.open(linkWhats(msg), '_blank', 'noopener');
+  });
 
   /* botão fixo de agendar (celular): aparece depois da abertura e some no contato */
   const fixo = document.getElementById('agendar-fixo'), contato = document.getElementById('agendar');

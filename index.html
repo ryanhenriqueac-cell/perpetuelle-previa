@@ -25,7 +25,7 @@
   <nav class="nav__links" id="menu">
     <a href="#transformacoes">Transformações</a>
     <a href="#ponto-brasileiro">Ponto Brasileiro</a>
-    <a href="#mega-hair">Mega Hair</a>
+    <a href="#o-cabelo">O cabelo</a>
     <a href="#equipe">Equipe</a>
     <a href="https://tuellehair.com.br/" target="_blank" rel="noopener">Tuelle Hair</a>
     <a href="#agendar" class="btn btn--cobre nav__cta">Agendar</a>
@@ -119,27 +119,41 @@
     </div>
   </section>
 
-  <!-- MONTE SEU MEGA HAIR (envia a ideia para avaliação no WhatsApp) -->
-  <section class="monte" id="mega-hair">
+  <!-- O CABELO: escolha do cabelo (vendido separado ou com aplicação) → mensagem pronta no WhatsApp -->
+  <section class="monte" id="o-cabelo">
     <div class="cabeca revela">
-      <p class="sobretitulo">Monte seu mega hair</p>
-      <h2>Do seu jeito, <em>em três escolhas.</em></h2>
-      <p>Escolha o método, o comprimento e a cor. Sua ideia chega pronta no nosso WhatsApp e a gente marca a sua avaliação.</p>
+      <p class="sobretitulo">O cabelo</p>
+      <h2>Escolha o seu cabelo, <em>cacho por cacho.</em></h2>
+      <p>Vendemos o cabelo e fazemos a aplicação. Monte o seu: curvatura, cor e comprimento. A gente responde no WhatsApp com a orientação e os valores.</p>
     </div>
 
     <form class="monte__grade" id="monte" onsubmit="return false">
       <div class="monte__passos">
         <fieldset class="passo revela">
-          <legend><span>1</span>Método de fixação</legend>
-          <div class="opcoes">
-            <label class="opcao"><input type="radio" name="metodo" value="Ponto Brasileiro" checked><span><b>Ponto Brasileiro</b><small>Exclusivo da casa</small></span></label>
-            <label class="opcao"><input type="radio" name="metodo" value="Quero orientação sobre o método"><span><b>Quero orientação</b><small>A gente indica na avaliação</small></span></label>
+          <legend><span>1</span>Curvatura</legend>
+          <div class="opcoes opcoes--3">
+            <label class="opcao opcao--img"><input type="radio" name="curvatura" value="Ondulado"><span><canvas data-forma="ondulado" aria-hidden="true"></canvas><b>Ondulado</b></span></label>
+            <label class="opcao opcao--img"><input type="radio" name="curvatura" value="Cacheado" checked><span><canvas data-forma="cacheado" aria-hidden="true"></canvas><b>Cacheado</b></span></label>
+            <label class="opcao opcao--img"><input type="radio" name="curvatura" value="Crespo"><span><canvas data-forma="crespo" aria-hidden="true"></canvas><b>Crespo</b></span></label>
           </div>
-          <p class="provisorio">Outros métodos de fixação entram aqui (lista a receber do salão).</p>
+          <p class="nota-exemplo">Categorias de exemplo: o salão define os tipos de curvatura que vende e como chamá-los.</p>
         </fieldset>
 
         <fieldset class="passo revela">
-          <legend><span>2</span>Comprimento</legend>
+          <legend><span>2</span>Cor</legend>
+          <div class="opcoes opcoes--cores">
+            <label class="opcao opcao--cor"><input type="radio" name="cor" value="Preto"><span><i style="--c:#2a2224"></i><b>Preto</b></span></label>
+            <label class="opcao opcao--cor"><input type="radio" name="cor" value="Castanho" checked><span><i style="--c:#7a4a2c"></i><b>Castanho</b></span></label>
+            <label class="opcao opcao--cor"><input type="radio" name="cor" value="Mel"><span><i style="--c:#C99A5C"></i><b>Mel</b></span></label>
+            <label class="opcao opcao--cor"><input type="radio" name="cor" value="Loiro"><span><i style="--c:#EBCB92"></i><b>Loiro</b></span></label>
+            <label class="opcao opcao--cor"><input type="radio" name="cor" value="Acobreado"><span><i style="--c:#C8693A"></i><b>Acobreado</b></span></label>
+            <label class="opcao opcao--cor"><input type="radio" name="cor" value="Quero orientação sobre a cor"><span><i class="cor-duvida"></i><b>Me ajuda</b></span></label>
+          </div>
+          <p class="nota-exemplo">Cores de exemplo: a cartela real vem do salão.</p>
+        </fieldset>
+
+        <fieldset class="passo revela">
+          <legend><span>3</span>Comprimento</legend>
           <div class="opcoes opcoes--4">
             <label class="opcao"><input type="radio" name="comprimento" value="Médio"><span><b>Médio</b></span></label>
             <label class="opcao"><input type="radio" name="comprimento" value="Longo" checked><span><b>Longo</b></span></label>
@@ -150,27 +164,28 @@
         </fieldset>
 
         <fieldset class="passo revela">
-          <legend><span>3</span>Cor</legend>
-          <div class="opcoes">
-            <label class="opcao"><input type="radio" name="cor" value="Natural, igual ao meu cabelo" checked><span><b>Natural</b><small>Igual ao meu cabelo</small></span></label>
-            <label class="opcao"><input type="radio" name="cor" value="Mais claro / com mechas"><span><b>Mais claro</b><small>Com mechas ou iluminado</small></span></label>
-            <label class="opcao"><input type="radio" name="cor" value="Mudar a cor"><span><b>Mudar a cor</b><small>Uma transformação</small></span></label>
-            <label class="opcao"><input type="radio" name="cor" value="Quero orientação sobre a cor"><span><b>Quero orientação</b><small>A gente indica</small></span></label>
+          <legend><span>4</span>O que você quer</legend>
+          <div class="opcoes opcoes--1">
+            <label class="opcao"><input type="radio" name="servico" value="Cabelo + aplicação com Ponto Brasileiro" checked><span><b>Cabelo + aplicação com Ponto Brasileiro</b><small>O método exclusivo da casa</small></span></label>
+            <label class="opcao"><input type="radio" name="servico" value="Cabelo + aplicação (quero orientação sobre o método)"><span><b>Cabelo + aplicação, com orientação</b><small>A gente indica o melhor método para você</small></span></label>
+            <label class="opcao"><input type="radio" name="servico" value="Só o cabelo"><span><b>Só o cabelo</b><small>Compra e retirada no salão</small></span></label>
           </div>
+          <p class="provisorio">Os outros métodos de aplicação (Ponto Americano e mais dois) entram aqui quando o salão enviar a descrição.</p>
         </fieldset>
       </div>
 
       <aside class="resumo revela">
-        <svg class="resumo__losango" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 L98 50 L50 98 L2 50 Z"/><path d="M58 2 L106 50 L58 98 L10 50 Z"/></svg>
-        <p class="sobretitulo">Seu mega hair</p>
+        <div class="resumo__previa"><canvas id="previa-cabelo" aria-hidden="true"></canvas><span>Ilustração</span></div>
+        <p class="sobretitulo">Seu cabelo</p>
         <dl>
-          <div><dt>Método</dt><dd id="r-metodo">Ponto Brasileiro</dd></div>
-          <div><dt>Comprimento</dt><dd id="r-comprimento">Longo</dd></div>
-          <div><dt>Cor</dt><dd id="r-cor">Natural, igual ao meu cabelo</dd></div>
+          <div><dt>Curvatura</dt><dd id="r-curvatura"></dd></div>
+          <div><dt>Cor</dt><dd id="r-cor"></dd></div>
+          <div><dt>Comprimento</dt><dd id="r-comprimento"></dd></div>
+          <div><dt>Você quer</dt><dd id="r-servico"></dd></div>
         </dl>
         <label class="campo"><span>Seu nome</span><input type="text" id="r-nome" autocomplete="given-name" placeholder="Como podemos te chamar?"></label>
-        <button type="button" class="btn btn--cobre" id="enviar-monte">Enviar para avaliação</button>
-        <p class="resumo__obs">Abre o WhatsApp com a mensagem pronta. Se puder, mande uma foto do seu cabelo hoje.</p>
+        <button type="button" class="btn btn--cobre" id="enviar-monte">Quero esse cabelo</button>
+        <p class="resumo__obs">Abre o WhatsApp com a mensagem pronta. Venda e retirada no salão, em Belo Horizonte: não enviamos para outras cidades.</p>
       </aside>
     </form>
   </section>
@@ -271,7 +286,7 @@
     <span>Perpetuélle</span>
   </a>
   <nav class="rodape-site__links">
-    <a href="#transformacoes">Transformações</a><a href="#ponto-brasileiro">Ponto Brasileiro</a><a href="#mega-hair">Mega Hair</a><a href="#equipe">Equipe</a>
+    <a href="#transformacoes">Transformações</a><a href="#ponto-brasileiro">Ponto Brasileiro</a><a href="#o-cabelo">O cabelo</a><a href="#equipe">Equipe</a>
     <a href="https://tuellehair.com.br/" target="_blank" rel="noopener">Tuelle Hair</a><a href="#duvidas">Dúvidas</a>
   </nav>
   <p class="rodape-site__copy">© 2026 Studio Perpetuélle · Mega Hair · Cabelos</p>
