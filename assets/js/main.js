@@ -136,7 +136,8 @@
     hero.style.setProperty('--p', reduz ? 0 : clamp(y / (hero.offsetHeight * .9)).toFixed(3));
 
     const r = ponto.getBoundingClientRect();
-    const p = reduz ? 1 : clamp(-r.top / (r.height - vh));
+    // celular: a seção rola normalmente e a revelação acompanha a entrada dela na tela
+    const p = reduz ? 1 : innerWidth <= 900 ? clamp((vh * .8 - r.top) / (r.height * .55)) : clamp(-r.top / (r.height - vh));
     pa.style.strokeDashoffset = la * (1 - clamp(p / .45));
     pb.style.strokeDashoffset = lb * (1 - clamp((p - .1) / .45));
     ponto.style.setProperty('--pc', clamp((p - .5) / .15).toFixed(3));
@@ -250,7 +251,7 @@
   const PF0 = window.PORTFOLIO || {profissionais: {}, fotos: []};
   const PF = {profissionais: PF0.profissionais, fotos: PF0.fotos.filter(f => !f.retrato)};
   const retratoDe = sp => PF0.fotos.find(f => f.retrato && f.p === sp);
-  const nomeProf = s => PF.profissionais[s] || s;
+  const nomeProf = s => s === 'salao' ? 'Studio Perpetuélle' : (PF.profissionais[s] || s);
   const legenda = f => `${nomeProf(f.p)} · ${f.c}`;
   function imgReal(f, classe, grande) {
     const im = document.createElement('img');
@@ -268,8 +269,9 @@
       const antes = document.getElementById('ad-antes'), depois = document.getElementById('ad-depois');
       antes.after(imgReal(par.antes, 'ad__img ad__foto', true)); depois.after(imgReal(par.depois, 'ad__img ad__img--depois ad__foto', true));
       antes.style.display = depois.style.display = 'none';
+      const lg = document.getElementById('ad-legenda'); lg.textContent = legenda(par.depois); lg.hidden = false;
     }
-    const mosaico = PF.fotos.filter(f => f.destaque).concat(PF.fotos.filter(f => !f.destaque && f.par !== 'antes'));
+    const mosaico = PF.fotos.filter(f => f.destaque).concat(PF.fotos.filter(f => !f.destaque && f.par !== 'antes')).filter(f => !par || f.grupo !== par.antes.grupo);
     const vistos = new Set();
     const escolhidas = mosaico.filter(f => !vistos.has(f.f) && vistos.add(f.f)).slice(0, 4);
     document.querySelectorAll('.mosaico figure').forEach((fig, i) => {
@@ -344,6 +346,66 @@
     const capa = retratoDe(card.dataset.prof) || PF.fotos.find(f => f.p === card.dataset.prof && f.par !== 'antes');
     if (capa) { const foto = card.querySelector('.membro__foto'); foto.replaceChildren(imgReal(capa)); foto.classList.add('membro__foto--img'); }
   });
+
+  /* ===== vídeos reais (ferramentas/videos.py → window.VIDEOS) ===== */
+  const VD = window.VIDEOS || {lista: []};
+  const vid = s => VD.lista.find(v => v.slug === s);
+  function videoLoop(v, classe) {
+    const el = document.createElement('video');
+    Object.assign(el, {muted: true, loop: true, playsInline: true, preload: 'metadata', poster: v.poster, className: classe});
+    el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); el.setAttribute('aria-hidden', 'true');
+    el.src = v.loop || v.src;
+    return el;
+  }
+  // toca só quando está na tela (economiza bateria e dados no celular)
+  const tocaNaTela = new IntersectionObserver(es => es.forEach(e => {
+    if (reduz) return;
+    if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause();
+  }), {threshold: .2});
+
+  // abertura: vídeo dentro do losango (no lugar da ilustração de cachos)
+  const vAb = vid(VD.abertura);
+  if (vAb) {
+    const janela = document.querySelector('.janela');
+    const el = videoLoop(vAb, 'janela__video');
+    janela.insertBefore(el, janela.querySelector('.janela__brilho'));
+    canvas.remove(); heroC = null;          // tira a animação desenhada (o vídeo assume)
+    tocaNaTela.observe(el);
+  }
+
+  // Ponto Brasileiro: vídeo da aplicação aparece dentro do losango conforme a frase acende
+  const vPb = vid(VD.ponto);
+  if (vPb) {
+    const desenho = document.querySelector('.ponto__desenho');
+    const caixa = document.createElement('div'); caixa.className = 'ponto__visual';
+    desenho.replaceWith(caixa); caixa.append(videoLoop(vPb, 'ponto__video'), desenho);
+    tocaNaTela.observe(caixa.querySelector('video'));
+  }
+
+  // bastidores: vídeos reais nos "reels"; toque para assistir com som
+  const reels = [...document.querySelectorAll('.bastidores .reel')];
+  const listaB = VD.lista.filter(v => v.slug !== VD.ponto).concat(VD.lista.filter(v => v.slug === VD.ponto));
+  reels.forEach((fig, i) => {
+    const v = listaB[i]; if (!v) return;
+    const cv = fig.querySelector('canvas'); cv.style.display = 'none'; cv.removeAttribute('data-cachos');
+    const el = document.createElement('video');
+    Object.assign(el, {src: v.src, poster: v.poster, preload: 'none', playsInline: true, className: 'reel__video'});
+    el.setAttribute('playsinline', '');
+    fig.prepend(el);
+    fig.querySelector('figcaption b').textContent = v.titulo;
+    fig.querySelector('figcaption small').textContent = `${Math.floor(v.dur / 60) ? Math.floor(v.dur / 60) + 'min ' : ''}${v.dur % 60}s · toque para assistir`;
+    fig.classList.add('reel--real'); fig.tabIndex = 0; fig.setAttribute('role', 'button'); fig.setAttribute('aria-label', `Assistir: ${v.titulo}`);
+    const alterna = () => {
+      if (el.paused) { reels.forEach(r => { const o = r.querySelector('video'); if (o && o !== el) { o.pause(); r.classList.remove('tocando'); } }); el.play(); fig.classList.add('tocando'); el.controls = true; }
+      else { el.pause(); fig.classList.remove('tocando'); }
+    };
+    fig.addEventListener('click', e => { if (e.target === el && el.controls) return; alterna(); });
+    fig.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(); } });
+    el.addEventListener('ended', () => fig.classList.remove('tocando'));
+  });
+  if (reels.length && listaB.length >= reels.length) {
+    const nota = document.querySelector('.bastidores__nota'); if (nota) nota.textContent = 'Mais vídeos de procedimentos e transformações a caminho. O @ do Instagram do salão entra aqui.';
+  }
 
   /* botão fixo de agendar (celular): aparece depois da abertura e some no contato */
   const fixo = document.getElementById('agendar-fixo'), contato = document.getElementById('agendar');
