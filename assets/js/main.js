@@ -382,26 +382,42 @@
     tocaNaTela.observe(caixa.querySelector('video'));
   }
 
-  // bastidores: vídeos reais nos "reels"; toque para assistir com som
+  // bastidores (como no site da Dra. Nicoly): os vídeos tocam sem som quando aparecem na tela;
+  // o toque abre a janela com o vídeo com som e o botão do WhatsApp
   const reels = [...document.querySelectorAll('.bastidores .reel')];
   const listaB = VD.lista.filter(v => v.slug !== VD.ponto).concat(VD.lista.filter(v => v.slug === VD.ponto));
+  const poucoDados = navigator.connection && navigator.connection.saveData;
+  const vmodal = document.getElementById('vmodal'), mv = document.getElementById('vmodal-video');
+  const reelsVideos = [], reelsVisiveis = new Set();
+  const autoplayReels = new IntersectionObserver(es => es.forEach(({target: v, isIntersecting}) => {
+    if (isIntersecting) { reelsVisiveis.add(v); if (!v.src) v.src = v.dataset.src; if (!vmodal.open) v.play().catch(() => {}); }
+    else { reelsVisiveis.delete(v); v.pause(); }
+  }), {threshold: .5});
+  function abreVideo(v) {
+    document.getElementById('vmodal-titulo').textContent = v.titulo;
+    document.getElementById('vmodal-cta').href = linkWhats(`Olá! Vi o vídeo "${v.titulo}" no site da Perpetuélle e tenho interesse.`);
+    mv.poster = v.poster; mv.src = v.src; mv.muted = false;
+    reelsVideos.forEach(x => x.pause());
+    vmodal.showModal(); document.body.style.overflow = 'hidden';
+    mv.play().catch(() => {});
+  }
+  vmodal.addEventListener('close', () => { mv.pause(); mv.removeAttribute('src'); mv.load(); document.body.style.overflow = '';
+    reelsVisiveis.forEach(x => x.play().catch(() => {})); });   // volta só quem está de fato na tela
+  vmodal.addEventListener('click', e => { if (e.target === vmodal) vmodal.close(); });
+  document.getElementById('vmodal-fechar').addEventListener('click', () => vmodal.close());
   reels.forEach((fig, i) => {
     const v = listaB[i]; if (!v) return;
     const cv = fig.querySelector('canvas'); cv.style.display = 'none'; cv.removeAttribute('data-cachos');
     const el = document.createElement('video');
-    Object.assign(el, {src: v.src, poster: v.poster, preload: 'none', playsInline: true, className: 'reel__video'});
-    el.setAttribute('playsinline', '');
-    fig.prepend(el);
+    Object.assign(el, {muted: true, loop: true, playsInline: true, preload: 'none', poster: v.poster, className: 'reel__video'});
+    el.setAttribute('muted', ''); el.setAttribute('playsinline', ''); el.dataset.src = v.loop || v.src;
+    fig.prepend(el); reelsVideos.push(el);
+    if (!reduz && !poucoDados) autoplayReels.observe(el);
     fig.querySelector('figcaption b').textContent = v.titulo;
-    fig.querySelector('figcaption small').textContent = `${Math.floor(v.dur / 60) ? Math.floor(v.dur / 60) + 'min ' : ''}${v.dur % 60}s · toque para assistir`;
-    fig.classList.add('reel--real'); fig.tabIndex = 0; fig.setAttribute('role', 'button'); fig.setAttribute('aria-label', `Assistir: ${v.titulo}`);
-    const alterna = () => {
-      if (el.paused) { reels.forEach(r => { const o = r.querySelector('video'); if (o && o !== el) { o.pause(); r.classList.remove('tocando'); } }); el.play(); fig.classList.add('tocando'); el.controls = true; }
-      else { el.pause(); fig.classList.remove('tocando'); }
-    };
-    fig.addEventListener('click', e => { if (e.target === el && el.controls) return; alterna(); });
-    fig.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(); } });
-    el.addEventListener('ended', () => fig.classList.remove('tocando'));
+    fig.querySelector('figcaption small').textContent = `${v.dur}s · toque para ver com som`;
+    fig.classList.add('reel--real'); fig.tabIndex = 0; fig.setAttribute('role', 'button'); fig.setAttribute('aria-label', `Assistir com som: ${v.titulo}`);
+    fig.addEventListener('click', () => abreVideo(v));
+    fig.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abreVideo(v); } });
   });
   if (reels.length && listaB.length >= reels.length) {
     const nota = document.querySelector('.bastidores__nota'); if (nota) nota.textContent = 'Mais vídeos de procedimentos e transformações a caminho. O @ do Instagram do salão entra aqui.';

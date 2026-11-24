@@ -8,7 +8,7 @@ window.VIDEOS = {
    "titulo": "Acelera transição: depoimento",
    "src": "assets/video/acelera-transicao-depoimento.mp4",
    "poster": "assets/video/acelera-transicao-depoimento.jpg",
-   "loop": null,
+   "loop": "assets/video/acelera-transicao-depoimento-loop.mp4",
    "dur": 40
   },
   {
@@ -32,7 +32,7 @@ window.VIDEOS = {
    "titulo": "Transformação com naturalidade",
    "src": "assets/video/transformacao-com-naturalidade.mp4",
    "poster": "assets/video/transformacao-com-naturalidade.jpg",
-   "loop": null,
+   "loop": "assets/video/transformacao-com-naturalidade-loop.mp4",
    "dur": 22
   },
   {
@@ -40,7 +40,7 @@ window.VIDEOS = {
    "titulo": "Transformação completa: mega hair e mechas",
    "src": "assets/video/transformacao-completa-mega-hair-e-mechas.mp4",
    "poster": "assets/video/transformacao-completa-mega-hair-e-mechas.jpg",
-   "loop": null,
+   "loop": "assets/video/transformacao-completa-mega-hair-e-mechas-loop.mp4",
    "dur": 28
   }
  ]
