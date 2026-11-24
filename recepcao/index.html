@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Recepção · Studio Perpetuélle</title>
+<!-- Ferramenta da recepção: enviar a apresentação "Quem vai cuidar de você?" pelo WhatsApp. Não aparece no menu do site. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--cobre:#C69443;--cobre-claro:#E2B76E;--linha:rgba(198,148,67,.35);--branco:#F2F1F4;--suave:rgba(242,241,244,.66);--card:#121214}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#000;color:var(--branco);font-family:"Lato",system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  main{max-width:1000px;margin:0 auto;padding:28px 16px 60px}
+  h1{font-family:"Lora",serif;font-weight:500;font-size:clamp(28px,5vw,40px);line-height:1.1}
+  .sub{margin-top:6px;color:var(--suave)}
+  .rot{display:block;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cobre)}
+  section{margin-top:28px}
+  .profs{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .prof{position:relative;cursor:pointer}
+  .prof input{position:absolute;opacity:0}
+  .prof span{display:block;border:1.5px solid rgba(242,241,244,.16);background:var(--card)}
+  .prof img{display:block;width:100%;aspect-ratio:1080/1528;object-fit:cover}
+  .prof b{display:block;padding:10px 12px;font-family:"Lora",serif;font-weight:500;font-size:18px}
+  .prof input:checked + span{border-color:var(--cobre);box-shadow:0 0 0 1px var(--cobre)}
+  .prof input:checked + span b{color:var(--cobre-claro)}
+  .prof input:focus-visible + span{outline:2px solid var(--cobre);outline-offset:2px}
+  .campos{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  label.campo span{display:block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--suave)}
+  label.campo input{margin-top:6px;width:100%;min-height:48px;padding:0 14px;font:inherit;color:var(--branco);background:#0a0a0a;border:1.5px solid rgba(242,241,244,.2);border-radius:0}
+  label.campo input:focus{outline:none;border-color:var(--cobre)}
+  .msg{margin-top:12px;width:100%;min-height:120px;padding:14px;font:inherit;color:var(--branco);background:#0a0a0a;border:1.5px solid rgba(242,241,244,.2);resize:vertical}
+  .acoes{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 20px;font:inherit;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:1.5px solid var(--cobre);background:none;color:var(--branco)}
+  .btn--cobre{background:var(--cobre);color:#000}
+  .aviso{margin-top:10px;font-size:14px;color:var(--suave)}
+  .ok{color:var(--cobre-claro)}
+  @media (max-width:600px){.acoes .btn{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<main>
+  <span class="rot">Recepção · Studio Perpetuélle</span>
+  <h1>Enviar “Quem vai cuidar de você?”</h1>
+  <p class="sub">Escolha a profissional, preencha os dados da cliente e envie a apresentação pelo WhatsApp.</p>
+
+  <section>
+    <span class="rot">1 · Profissional</span>
+    <div class="profs" id="profs"></div>
+  </section>
+
+  <section>
+    <span class="rot">2 · Cliente</span>
+    <div class="campos">
+      <label class="campo"><span>Nome da cliente</span><input id="nome" autocomplete="off" placeholder="Ex.: Ana"></label>
+      <label class="campo"><span>WhatsApp da cliente</span><input id="fone" inputmode="tel" autocomplete="off" placeholder="(31) 99999-9999"></label>
+      <label class="campo"><span>Serviço (opcional)</span><input id="servico" autocomplete="off" placeholder="Ex.: manutenção do Ponto Brasileiro"></label>
+    </div>
+  </section>
+
+  <section>
+    <span class="rot">3 · Mensagem</span>
+    <textarea class="msg" id="msg" aria-label="Mensagem que será enviada"></textarea>
+    <div class="acoes">
+      <a class="btn btn--cobre" id="enviar" href="#" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+      <a class="btn" id="baixar-jpg" href="#" download>Baixar imagem</a>
+      <a class="btn" id="baixar-pdf" href="#" download>Baixar PDF</a>
+      <button class="btn" type="button" id="copiar">Copiar mensagem</button>
+    </div>
+    <p class="aviso" id="aviso">Dica: no celular, “Baixar imagem” e depois anexar no WhatsApp mostra a apresentação inteira na conversa.</p>
+  </section>
+</main>
+
+<script src="../assets/js/equipe-dados.js"></script>
+<script>
+(() => {
+  const EQ = window.EQUIPE, $ = id => document.getElementById(id);
+  const urlArq = (p, ext) => new URL(`../apresentacao/${p}.${ext}`, location.href).href;
+  Object.entries(EQ).forEach(([slug, p], i) => {
+    const l = document.createElement('label'); l.className = 'prof';
+    l.innerHTML = `<input type="radio" name="prof" value="${slug}" ${i ? '' : 'checked'}><span><img alt="" loading="lazy"><b></b></span>`;
+    l.querySelector('img').src = `../apresentacao/${slug}.jpg`; l.querySelector('b').textContent = p.nome;
+    $('profs').append(l);
+  });
+  const prof = () => document.querySelector('input[name="prof"]:checked').value;
+  let editada = false;
+  function mensagem() {
+    const p = EQ[prof()], nome = $('nome').value.trim(), serv = $('servico').value.trim();
+    return `Olá${nome ? ', ' + nome : ''}! Que alegria ter você com a gente. ` +
+      `${serv ? `Seu atendimento de ${serv} será com a ${p.nome}.` : `Quem vai cuidar de você é a ${p.nome}.`} ` +
+      `Enquanto isso, conheça um pouco dela e do Studio Perpetuélle: ${urlArq(prof(), 'jpg')}`;
+  }
+  function atualiza() {
+    const slug = prof();
+    if (!editada) $('msg').value = mensagem();
+    const fone = $('fone').value.replace(/\D/g, ''), num = fone ? (fone.length <= 11 ? '55' + fone : fone) : '';
+    $('enviar').href = `https://wa.me/${num}?text=${encodeURIComponent($('msg').value)}`;
+    $('baixar-jpg').href = `../apresentacao/${slug}.jpg`; $('baixar-jpg').setAttribute('download', `Quem vai cuidar de voce - ${EQ[slug].nome}.jpg`);
+    $('baixar-pdf').href = `../apresentacao/${slug}.pdf`; $('baixar-pdf').setAttribute('download', `Quem vai cuidar de voce - ${EQ[slug].nome}.pdf`);
+  }
+  document.addEventListener('input', e => { if (e.target.id === 'msg') editada = true; if (['nome', 'servico'].includes(e.target.id) || e.target.name === 'prof') editada = false; atualiza(); });
+  document.addEventListener('change', e => { if (e.target.name === 'prof') { editada = false; atualiza(); } });
+  $('copiar').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText($('msg').value); $('aviso').textContent = 'Mensagem copiada.'; $('aviso').className = 'aviso ok'; }
+    catch { $('msg').select(); $('aviso').textContent = 'Selecione e copie a mensagem acima.'; }
+  });
+  atualiza();
+})();
+</script>
+</body>
+</html>

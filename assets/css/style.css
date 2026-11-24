@@ -331,7 +331,7 @@ em{font-style:italic;color:var(--cobre-claro);font-weight:400}
 .mosaico__foto{transition:transform 1.2s var(--ease)}
 .mosaico figure:hover .mosaico__foto{transform:scale(1.05)}
 .mosaico figcaption{color:var(--branco)}
-button.membro__link{background:none;border:0;padding:0;font:inherit;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre);cursor:pointer;text-align:left}
+button.membro__link{display:block;background:none;border:0;padding:0;font:inherit;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre);cursor:pointer;text-align:left}
 button.membro__link:disabled{cursor:default;opacity:.85}
 button.membro__link:not(:disabled):hover{color:var(--cobre-claro)}
 .membro__foto--img{border-style:solid!important;overflow:hidden}
@@ -342,6 +342,10 @@ button.membro__link:not(:disabled):hover{color:var(--cobre-claro)}
 .pf__topo{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:22px clamp(18px,3vw,32px);background:#050505;border-bottom:1px solid rgba(198,148,67,.2)}
 .pf__topo h2{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3vw,36px)}
 .pf__topo h2 small{display:block;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cobre)}
+.pf__acoes{display:flex;align-items:center;gap:10px}
+.pf__acoes .btn{min-height:44px;padding:0 18px;font-size:12px}
+.membro__agendar{display:table;margin-top:8px;font-size:13px;color:var(--suave);text-decoration:underline;text-underline-offset:4px}
+.membro__agendar:hover{color:var(--cobre-claro)}
 .pf__fechar{width:44px;height:44px;border:1px solid var(--cobre-linha);background:none;color:var(--branco);font-size:22px;cursor:pointer}
 .pf__filtros{display:flex;flex-wrap:wrap;gap:8px;padding:16px clamp(18px,3vw,32px) 0}
 .pf__filtro{min-height:38px;padding:0 16px;border:1px solid rgba(242,241,244,.2);background:none;color:var(--suave);font:inherit;font-size:13px;font-weight:700;letter-spacing:.06em;cursor:pointer}
@@ -391,8 +395,9 @@ button.membro__link:not(:disabled):hover{color:var(--cobre-claro)}
   .resumo{position:relative;top:0}
   .equipe__grade{grid-template-columns:minmax(0,1fr)}
   .membro__foto span{font-size:40px}
+  .pf__acoes .btn{padding:0 12px;font-size:11px;letter-spacing:.08em}
   .membro{display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:center}
-  .membro__foto{grid-row:span 3}
+  .membro__foto{grid-row:span 4}
   .membro h3{margin-top:0;font-size:21px}
   .contato__info{grid-template-columns:minmax(0,1fr)}
   .contato__acoes .btn{flex:1 1 100%}

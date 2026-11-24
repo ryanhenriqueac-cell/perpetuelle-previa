@@ -283,7 +283,10 @@
   const dlg = document.getElementById('portfolio');
   const dlgNome = document.getElementById('pf-nome'), dlgFiltros = document.getElementById('pf-filtros'), dlgGrade = document.getElementById('pf-grade');
   const dlgVer = document.getElementById('pf-ver'), dlgVerImg = document.getElementById('pf-ver-img'), dlgVerLeg = document.getElementById('pf-ver-leg');
-  let pfLista = [], atual = 0;
+  let pfLista = [], atual = 0, pfProf = null;
+  const msgProf = (sp, servico) => `Olá! Vi o ${servico ? 'trabalho' : 'portfólio'} da ${nomeProf(sp)} no site da Perpetuélle e quero agendar${servico ? ' ' + servico : ''} com ela.`;
+  const btAgendarProf = document.getElementById('pf-agendar');
+  function atualizaAgendarProf(servico) { btAgendarProf.href = linkWhats(msgProf(pfProf, servico)); btAgendarProf.textContent = `Agendar com a ${nomeProf(pfProf)}`; }
   function mostraGrade(fotos) {
     pfLista = fotos; dlgGrade.replaceChildren(...fotos.map((f, i) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'pf__item';
@@ -298,13 +301,14 @@
   }
   function abrePortfolio(sp) {
     const fotos = PF.fotos.filter(f => f.p === sp);
+    pfProf = sp; atualizaAgendarProf(null);
     dlgNome.textContent = nomeProf(sp);
     const cats = [...new Set(fotos.map(f => f.c))];
     dlgFiltros.replaceChildren(...['Todos', ...cats].map((c, i) => {
       const b = document.createElement('button'); b.type = 'button'; b.textContent = c; b.className = 'pf__filtro' + (i ? '' : ' ativo');
       b.addEventListener('click', () => {
         dlgFiltros.querySelectorAll('.pf__filtro').forEach(x => x.classList.toggle('ativo', x === b));
-        mostraGrade(i ? fotos.filter(f => f.c === c) : fotos);
+        mostraGrade(i ? fotos.filter(f => f.c === c) : fotos); atualizaAgendarProf(i ? c : null);
       });
       return b;
     }));
@@ -322,6 +326,11 @@
     if (dlgVer.hidden) return;
     if (e.key === 'ArrowLeft') abreFoto(atual - 1);
     if (e.key === 'ArrowRight') abreFoto(atual + 1);
+  });
+  document.querySelectorAll('.membro[data-prof]').forEach(card => {
+    const a = document.createElement('a'); a.className = 'membro__agendar'; a.target = '_blank'; a.rel = 'noopener';
+    a.href = linkWhats(`Olá! Vim pelo site da Perpetuélle e quero agendar com a ${nomeProf(card.dataset.prof)}.`);
+    a.textContent = `Agendar com a ${nomeProf(card.dataset.prof)}`; card.append(a);
   });
   document.querySelectorAll('.membro[data-prof]').forEach(card => {
     const n = PF.fotos.filter(f => f.p === card.dataset.prof).length, bt = card.querySelector('.membro__link');

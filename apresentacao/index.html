@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<meta name="robots" content="noindex, nofollow">
+<title>Quem vai cuidar de você · Studio Perpetuélle</title>
+<!--
+  APRESENTAÇÃO DA PROFISSIONAL ("Quem vai cuidar de você?"), 1080×1528 (proporção A4).
+  Uso: apresentacao/?p=gabi  (dados em assets/js/equipe-dados.js e fotos do portfólio).
+  Gerada em JPG e PDF por ferramentas/apresentacoes.py para enviar pelo WhatsApp.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--cobre:#C69443;--cobre-claro:#E2B76E;--linha:rgba(198,148,67,.35);--branco:#F2F1F4;--suave:rgba(242,241,244,.66);--card:#111113}
+  @page{size:1080px 1528px;margin:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1528px;background:#000;overflow:hidden}
+  body{font-family:"Lato",sans-serif;color:var(--branco);-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pg{position:relative;width:1080px;height:1528px;padding:52px 64px 44px;overflow:hidden;display:flex;flex-direction:column;
+    background:radial-gradient(800px 600px at 90% 10%,#1d150c,transparent 70%),#000}
+  .fundo{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--cobre);stroke-width:1.6;opacity:.14;pointer-events:none}
+  .serif{font-family:"Lora",serif}
+  .provisorio{border:1px dashed var(--linha);padding:12px 16px;color:var(--suave);font-size:17px;font-style:italic}
+
+  .topo{position:relative;display:flex;align-items:center;justify-content:space-between}
+  .marca{display:flex;align-items:center;gap:14px;font-family:"Lora",serif;font-weight:600;font-size:34px;color:#D6D5DA}
+  .marca svg{width:46px;height:46px;fill:none;stroke:var(--cobre);stroke-width:1.6;overflow:visible}
+  .marca small{display:block;font-family:"Lato";font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cobre);margin-top:2px}
+  .selo{padding:10px 20px;border:1.5px solid var(--linha);border-radius:999px;font-size:14px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cobre-claro)}
+
+  .hero{position:relative;margin-top:34px;display:grid;grid-template-columns:1fr 410px;gap:44px;align-items:start}
+  .hero h1{font-family:"Lora",serif;font-weight:500;font-size:68px;line-height:1.04;letter-spacing:-1px}
+  .hero h1 em{color:var(--cobre-claro);font-weight:400}
+  .quem{margin-top:26px;padding-top:22px;border-top:1.5px solid var(--linha)}
+  .quem .rot{font-size:14px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--cobre)}
+  .quem h2{margin-top:8px;font-family:"Lora",serif;font-weight:500;font-size:58px;line-height:1}
+  .quem p{margin-top:8px;font-size:20px;color:var(--suave)}
+  .frase{margin-top:26px;font-family:"Lora",serif;font-style:italic;font-size:26px;line-height:1.35;color:var(--branco);padding-left:22px;border-left:2px solid var(--cobre)}
+  .frase.provisorio{border-left-width:1px;font-size:18px;padding:12px 16px}
+  .foto{position:relative;height:500px}
+  .foto__img{position:absolute;inset:0 22px 22px 0;overflow:hidden;background:#1a120c}
+  .foto__img img,.foto__img canvas{width:100%;height:100%;object-fit:cover;display:block}
+  .foto__img span{position:absolute;left:12px;bottom:12px;padding:6px 10px;background:rgba(0,0,0,.65);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--suave)}
+  .foto svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--cobre);stroke-width:.4;overflow:visible}
+
+  .sobre{position:relative;margin-top:30px;display:grid;grid-template-columns:1.25fr 1fr;gap:44px}
+  .sobre h3,.trab h3{font-size:14px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--cobre)}
+  .sobre p.txt{margin-top:12px;font-size:19px;line-height:1.5;color:#dcdbe0}
+  .sobre .provisorio{margin-top:12px}
+  .chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
+  .chips span{padding:8px 14px;border:1.5px solid var(--linha);font-size:16px;font-weight:700}
+
+  .trab{position:relative;margin-top:28px}
+  .trab__grade{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .trab__grade figure{position:relative;aspect-ratio:4/3;overflow:hidden;border:1.5px solid rgba(198,148,67,.22);background:#1a120c}
+  .trab__grade img,.trab__grade canvas{width:100%;height:100%;object-fit:cover;display:block}
+  .trab__grade figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+
+  .trad{position:relative;margin-top:28px;display:flex;align-items:center;gap:34px;padding:26px 32px;border:1.5px solid var(--linha);background:linear-gradient(120deg,#17110a,#0a0a0b 70%)}
+  .trad__num{font-family:"Lora",serif;font-weight:500;font-size:104px;line-height:.9;color:transparent;-webkit-text-stroke:1.5px var(--cobre);letter-spacing:-3px}
+  .trad__num sup{font-size:48px;-webkit-text-stroke:0;color:var(--cobre-claro);vertical-align:top}
+  .trad h3{font-family:"Lora",serif;font-weight:500;font-size:30px;line-height:1.15}
+  .trad h3 em{color:var(--cobre-claro)}
+  .trad ul{margin-top:10px;list-style:none;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:16px;color:var(--suave)}
+  .trad li::before{content:"";display:inline-block;width:8px;height:8px;margin-right:10px;background:var(--cobre);transform:rotate(45deg) translateY(-2px)}
+
+  .rodape{position:relative;margin-top:auto;padding-top:22px;border-top:1.5px solid var(--linha);display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+  .rodape p{font-size:16px;line-height:1.6;color:var(--suave)}
+  .rodape strong{display:block;font-family:"Lora",serif;font-weight:500;font-size:22px;color:var(--branco);margin-bottom:4px}
+  .rodape .wpp{text-align:right}
+  .rodape .wpp b{display:block;font-family:"Lora",serif;font-size:26px;color:var(--cobre-claro)}
+</style>
+</head>
+<body>
+<div class="pg">
+  <svg class="fundo" viewBox="0 0 1080 1528" aria-hidden="true"><path d="M760 -300 L1500 440 L760 1180 L20 440 Z"/><path d="M840 -300 L1580 440 L840 1180 L100 440 Z"/></svg>
+
+  <header class="topo">
+    <div class="marca">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 L37 20 L20 37 L3 20 Z"/><path d="M25 3 L42 20 L25 37 L8 20 Z" opacity=".55"/><circle cx="22.5" cy="11" r="2"/></svg>
+      <div>Perpetuélle<small>Mega Hair · Cabelos</small></div>
+    </div>
+    <div class="selo">Belo Horizonte</div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Quem vai <em>cuidar</em><br>de você?</h1>
+      <div class="quem">
+        <p class="rot">Sua profissional</p>
+        <h2 id="nome"></h2>
+        <p id="funcao"></p>
+      </div>
+      <blockquote class="frase" id="frase"></blockquote>
+    </div>
+    <div class="foto">
+      <div class="foto__img" id="foto"></div>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M8 0 L100 0 L100 92"/><path d="M100 100 L18 100" opacity=".6"/></svg>
+    </div>
+  </section>
+
+  <section class="sobre">
+    <div><h3>Sobre ela</h3><div id="sobre"></div></div>
+    <div><h3>Especialidades</h3><div id="especialidades"></div></div>
+  </section>
+
+  <section class="trab">
+    <h3 id="trab-tit"></h3>
+    <div class="trab__grade" id="trabalhos"></div>
+  </section>
+
+  <section class="trad">
+    <div class="trad__num">15<sup>+</sup></div>
+    <div>
+      <h3>Mais de 15 anos <em>cuidando de cachos.</em></h3>
+      <ul>
+        <li>Especialista em cabelos cacheados e mega hair</li>
+        <li>Ponto Brasileiro, método exclusivo da casa</li>
+        <li>Tuelle Hair, a nossa linha própria</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <p><strong>Studio Perpetuélle</strong><span id="endereco"></span><br><span id="instagram"></span></p>
+    <p class="wpp">WhatsApp<b id="whatsapp"></b></p>
+  </footer>
+</div>
+
+<script src="../assets/js/equipe-dados.js"></script>
+<script src="../assets/js/portfolio-dados.js"></script>
+<script>
+(() => {
+  const slug = new URLSearchParams(location.search).get('p') || 'cristiane';
+  const pessoa = (window.EQUIPE || {})[slug] || {nome: slug, funcao: ''};
+  const S = window.SALAO, PF = window.PORTFOLIO || {fotos: []};
+  const $ = id => document.getElementById(id);
+  const aReceber = (txt, el = 'p') => { const e = document.createElement(el); e.className = 'provisorio'; e.textContent = txt; return e; };
+
+  document.title = `Quem vai cuidar de você · ${pessoa.nome} · Studio Perpetuélle`;
+  $('nome').textContent = pessoa.nome;
+  $('funcao').textContent = pessoa.funcao;
+  if (pessoa.frase) $('frase').textContent = `“${pessoa.frase}”`;
+  else { $('frase').classList.add('provisorio'); $('frase').textContent = `Frase da ${pessoa.nome} a receber.`; }
+  if (pessoa.sobre) { const p = document.createElement('p'); p.className = 'txt'; p.textContent = pessoa.sobre; $('sobre').append(p); }
+  $('sobre').append(...(pessoa.historia ? [Object.assign(document.createElement('p'), {className: 'txt', textContent: pessoa.historia})]
+                                         : [aReceber(`História da ${pessoa.nome} a receber: começo na profissão, formação e o que ama fazer.`)]));
+  if (pessoa.especialidades && pessoa.especialidades.length) {
+    const c = document.createElement('div'); c.className = 'chips';
+    pessoa.especialidades.forEach(t => { const s = document.createElement('span'); s.textContent = t; c.append(s); });
+    $('especialidades').append(c);
+  } else $('especialidades').append(aReceber('Especialidades a receber.'));
+  $('endereco').textContent = S.endereco;
+  $('instagram').textContent = S.instagram ? `Instagram ${S.instagram}` : '';
+  $('whatsapp').textContent = S.whatsapp;
+  $('trab-tit').textContent = `Alguns trabalhos da ${pessoa.nome}`;
+
+  // fotos reais (portfólio) ou ilustração de cachos enquanto não chegam
+  const fotos = PF.fotos.filter(f => f.p === slug && f.par !== 'antes');
+  const retrato = fotos.find(f => /retrato|perfil/i.test(f.f));
+  function img(src, alt) { const i = new Image(); i.src = '../' + src; i.alt = alt; return i; }
+  function cachos(cv, cores, fundo, seed, escala) {
+    const W = cv.width = cv.clientWidth * 2, H = cv.height = cv.clientHeight * 2, c = cv.getContext('2d');
+    let s = seed; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, fundo[0]); g.addColorStop(1, fundo[1]); c.fillStyle = g; c.fillRect(0, 0, W, H);
+    const base = W * .042 * escala; c.lineCap = 'round';
+    for (let camada = 0; camada < 2; camada++) for (let i = 0; i < Math.ceil((W + base * 2) / (base * (camada ? 1.5 : 1.8))); i++) {
+      const A = base * (.65 + r() * .7), B = A * (.22 + r() * .22), p = A * (.3 + r() * .14), x0 = -base + r() * (W + base * 2), fase = r() * 6.28, f2 = r() * 6.28, f3 = r() * 6.28, der = A * (.4 + r() * .6), fim = H * (1 + r() * .2);
+      for (let k = 0; k < 7; k++) {
+        const dx = (r() - .5) * A * .55, df = (r() - .5) * 1.1; c.beginPath(); let y = -20 - r() * 50, th = 0, first = true;
+        while (y < fim) { const amp = A * (.8 + .3 * Math.sin(th * .13 + f2)); const x = x0 + dx + der * Math.sin(th * .05 + f3) + amp * Math.sin(th + fase + df), yy = y + B * Math.cos(th + fase + df);
+          first ? c.moveTo(x, yy) : c.lineTo(x, yy); first = false; th += .42; y += p * .42 * (1 + .25 * Math.sin(th * .07 + f3)); }
+        c.strokeStyle = cores[Math.floor(r() * cores.length)]; c.globalAlpha = camada ? .5 + r() * .5 : .18 + r() * .25; c.lineWidth = (.7 + r() * 1.4) * 2; c.stroke();
+      }
+    }
+    c.globalAlpha = 1;
+  }
+  const PAL = [
+    [['#F3D9A6', '#E2BC7E', '#C99A5C', '#A8784A', '#FBEBC8'], ['#4a2e18', '#1c1009']],
+    [['#A9714A', '#C68E5E', '#8A5636', '#DDAA77', '#6B4A2E'], ['#3a2415', '#140b06']],
+    [['#C8693A', '#E08A55', '#A4512A', '#F0A877', '#7E3A1C'], ['#4a2210', '#180a04']]
+  ];
+  if (retrato) $('foto').append(img(retrato.f, `Foto de ${pessoa.nome}`));
+  else { const cv = document.createElement('canvas'); $('foto').append(cv); const s = document.createElement('span'); s.textContent = `Foto da ${pessoa.nome} a receber`; $('foto').append(s);
+         requestAnimationFrame(() => cachos(cv, PAL[1][0], PAL[1][1], 17, 1.3)); }
+  const trabalhos = fotos.filter(f => f !== retrato).slice(0, 3);
+  for (let i = 0; i < 3; i++) {
+    const fig = document.createElement('figure'), cap = document.createElement('figcaption'), f = trabalhos[i];
+    if (f) { fig.append(img(f.m, `Trabalho de ${pessoa.nome} · ${f.c}`)); cap.textContent = f.c; }
+    else { const cv = document.createElement('canvas'); fig.append(cv); cap.textContent = 'Foto do portfólio a receber'; requestAnimationFrame(() => cachos(cv, PAL[i][0], PAL[i][1], 40 + i * 9, 1.4)); }
+    fig.append(cap); $('trabalhos').append(fig);
+  }
+})();
+</script>
+</body>
+</html>
