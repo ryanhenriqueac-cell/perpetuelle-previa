@@ -247,7 +247,9 @@
   }
 
   /* ===== portfólio: fotos reais vindas de ferramentas/portfolio.py (window.PORTFOLIO) ===== */
-  const PF = window.PORTFOLIO || {profissionais: {}, fotos: []};
+  const PF0 = window.PORTFOLIO || {profissionais: {}, fotos: []};
+  const PF = {profissionais: PF0.profissionais, fotos: PF0.fotos.filter(f => !f.retrato)};
+  const retratoDe = sp => PF0.fotos.find(f => f.retrato && f.p === sp);
   const nomeProf = s => PF.profissionais[s] || s;
   const legenda = f => `${nomeProf(f.p)} · ${f.c}`;
   function imgReal(f, classe, grande) {
@@ -334,10 +336,12 @@
   });
   document.querySelectorAll('.membro[data-prof]').forEach(card => {
     const n = PF.fotos.filter(f => f.p === card.dataset.prof).length, bt = card.querySelector('.membro__link');
+    const ret = retratoDe(card.dataset.prof);
+    if (ret) { const foto = card.querySelector('.membro__foto'); foto.replaceChildren(imgReal(ret)); foto.classList.add('membro__foto--img'); }
     if (!n || !bt) return;
     bt.disabled = false; bt.textContent = `Ver portfólio · ${n} foto${n > 1 ? 's' : ''}`;
     bt.addEventListener('click', () => abrePortfolio(card.dataset.prof));
-    const capa = PF.fotos.find(f => f.p === card.dataset.prof && f.par !== 'antes');
+    const capa = retratoDe(card.dataset.prof) || PF.fotos.find(f => f.p === card.dataset.prof && f.par !== 'antes');
     if (capa) { const foto = card.querySelector('.membro__foto'); foto.replaceChildren(imgReal(capa)); foto.classList.add('membro__foto--img'); }
   });
 

@@ -160,7 +160,7 @@
 
   // fotos reais (portfólio) ou ilustração de cachos enquanto não chegam
   const fotos = PF.fotos.filter(f => f.p === slug && f.par !== 'antes');
-  const retrato = fotos.find(f => /retrato|perfil/i.test(f.f));
+  const retrato = PF.fotos.find(f => f.p === slug && f.retrato);
   function img(src, alt) { const i = new Image(); i.src = '../' + src; i.alt = alt; return i; }
   function cachos(cv, cores, fundo, seed, escala) {
     const W = cv.width = cv.clientWidth * 2, H = cv.height = cv.clientHeight * 2, c = cv.getContext('2d');
@@ -186,7 +186,7 @@
   if (retrato) $('foto').append(img(retrato.f, `Foto de ${pessoa.nome}`));
   else { const cv = document.createElement('canvas'); $('foto').append(cv); const s = document.createElement('span'); s.textContent = `Foto da ${pessoa.nome} a receber`; $('foto').append(s);
          requestAnimationFrame(() => cachos(cv, PAL[1][0], PAL[1][1], 17, 1.3)); }
-  const trabalhos = fotos.filter(f => f !== retrato).slice(0, 3);
+  const trabalhos = fotos.filter(f => !f.retrato).slice(0, 3);
   for (let i = 0; i < 3; i++) {
     const fig = document.createElement('figure'), cap = document.createElement('figcaption'), f = trabalhos[i];
     if (f) { fig.append(img(f.m, `Trabalho de ${pessoa.nome} · ${f.c}`)); cap.textContent = f.c; }
