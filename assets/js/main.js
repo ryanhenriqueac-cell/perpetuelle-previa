@@ -246,6 +246,92 @@
     }, {threshold: .6}).observe(contador);
   }
 
+  /* ===== portfólio: fotos reais vindas de ferramentas/portfolio.py (window.PORTFOLIO) ===== */
+  const PF = window.PORTFOLIO || {profissionais: {}, fotos: []};
+  const nomeProf = s => PF.profissionais[s] || s;
+  const legenda = f => `${nomeProf(f.p)} · ${f.c}`;
+  function imgReal(f, classe, grande) {
+    const im = document.createElement('img');
+    im.src = grande ? f.f : f.m; im.alt = `Trabalho de ${legenda(f)}`; im.loading = 'lazy'; im.decoding = 'async';
+    if (classe) im.className = classe;
+    return im;
+  }
+
+  // Transformações: primeiro par antes/depois no slider; destaques (ou outras fotos) no mosaico
+  (function () {
+    const pares = {};
+    PF.fotos.forEach(f => { if (f.grupo) (pares[f.grupo] ||= {})[f.par] = f; });
+    const par = Object.values(pares)[0];
+    if (par) {
+      const antes = document.getElementById('ad-antes'), depois = document.getElementById('ad-depois');
+      antes.after(imgReal(par.antes, 'ad__img ad__foto', true)); depois.after(imgReal(par.depois, 'ad__img ad__img--depois ad__foto', true));
+      antes.style.display = depois.style.display = 'none';
+    }
+    const mosaico = PF.fotos.filter(f => f.destaque).concat(PF.fotos.filter(f => !f.destaque && f.par !== 'antes'));
+    const vistos = new Set();
+    const escolhidas = mosaico.filter(f => !vistos.has(f.f) && vistos.add(f.f)).slice(0, 4);
+    document.querySelectorAll('.mosaico figure').forEach((fig, i) => {
+      const f = escolhidas[i]; if (!f) return;
+      const cv = fig.querySelector('canvas'); cv.style.display = 'none'; cv.removeAttribute('data-cachos');
+      fig.prepend(imgReal(f, 'mosaico__foto', true));
+      fig.querySelector('figcaption').textContent = legenda(f);
+    });
+    if (par && escolhidas.length >= 4) document.querySelector('.transf__nota')?.remove();
+  })();
+
+  // Equipe: botão "Ver portfólio" abre o portfólio da profissional, com filtro por serviço
+  const dlg = document.getElementById('portfolio');
+  const dlgNome = document.getElementById('pf-nome'), dlgFiltros = document.getElementById('pf-filtros'), dlgGrade = document.getElementById('pf-grade');
+  const dlgVer = document.getElementById('pf-ver'), dlgVerImg = document.getElementById('pf-ver-img'), dlgVerLeg = document.getElementById('pf-ver-leg');
+  let pfLista = [], atual = 0;
+  function mostraGrade(fotos) {
+    pfLista = fotos; dlgGrade.replaceChildren(...fotos.map((f, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pf__item';
+      b.append(imgReal(f)); const s = document.createElement('span'); s.textContent = f.par ? `${f.c} · ${f.par}` : f.c; b.append(s);
+      b.addEventListener('click', () => abreFoto(i)); return b;
+    }));
+  }
+  function abreFoto(i) {
+    atual = (i + pfLista.length) % pfLista.length; const f = pfLista[atual];
+    dlgVerImg.src = f.f; dlgVerImg.alt = `Trabalho de ${legenda(f)}`; dlgVerLeg.textContent = f.par ? `${legenda(f)} · ${f.par}` : legenda(f);
+    dlgVer.hidden = false;
+  }
+  function abrePortfolio(sp) {
+    const fotos = PF.fotos.filter(f => f.p === sp);
+    dlgNome.textContent = nomeProf(sp);
+    const cats = [...new Set(fotos.map(f => f.c))];
+    dlgFiltros.replaceChildren(...['Todos', ...cats].map((c, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = c; b.className = 'pf__filtro' + (i ? '' : ' ativo');
+      b.addEventListener('click', () => {
+        dlgFiltros.querySelectorAll('.pf__filtro').forEach(x => x.classList.toggle('ativo', x === b));
+        mostraGrade(i ? fotos.filter(f => f.c === c) : fotos);
+      });
+      return b;
+    }));
+    dlgFiltros.hidden = cats.length < 2;
+    mostraGrade(fotos); dlgVer.hidden = true;
+    dlg.showModal(); document.body.style.overflow = 'hidden';
+  }
+  dlg.addEventListener('close', () => { document.body.style.overflow = ''; });
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  document.getElementById('pf-fechar').addEventListener('click', () => dlg.close());
+  document.getElementById('pf-voltar').addEventListener('click', () => { dlgVer.hidden = true; });
+  document.getElementById('pf-ant').addEventListener('click', () => abreFoto(atual - 1));
+  document.getElementById('pf-prox').addEventListener('click', () => abreFoto(atual + 1));
+  dlg.addEventListener('keydown', e => {
+    if (dlgVer.hidden) return;
+    if (e.key === 'ArrowLeft') abreFoto(atual - 1);
+    if (e.key === 'ArrowRight') abreFoto(atual + 1);
+  });
+  document.querySelectorAll('.membro[data-prof]').forEach(card => {
+    const n = PF.fotos.filter(f => f.p === card.dataset.prof).length, bt = card.querySelector('.membro__link');
+    if (!n || !bt) return;
+    bt.disabled = false; bt.textContent = `Ver portfólio · ${n} foto${n > 1 ? 's' : ''}`;
+    bt.addEventListener('click', () => abrePortfolio(card.dataset.prof));
+    const capa = PF.fotos.find(f => f.p === card.dataset.prof && f.par !== 'antes');
+    if (capa) { const foto = card.querySelector('.membro__foto'); foto.replaceChildren(imgReal(capa)); foto.classList.add('membro__foto--img'); }
+  });
+
   /* botão fixo de agendar (celular): aparece depois da abertura e some no contato */
   const fixo = document.getElementById('agendar-fixo'), contato = document.getElementById('agendar');
   function botaoFixo() {

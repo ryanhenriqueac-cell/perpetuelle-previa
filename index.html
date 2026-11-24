@@ -314,12 +314,12 @@
       <p>Conheça cada profissional e o portfólio dela, separado por serviço.</p>
     </div>
     <div class="equipe__grade">
-      <article class="membro membro--dona revela"><div class="membro__foto"><span>C</span></div><h3>Cristiane</h3><p>À frente do Studio Perpetuélle</p><span class="membro__link">Portfólio em breve</span></article>
-      <article class="membro revela" style="--d:.06s"><div class="membro__foto"><span>A</span></div><h3>Andreza</h3><p>Cabeleireira</p><span class="membro__link">Portfólio em breve</span></article>
-      <article class="membro revela" style="--d:.12s"><div class="membro__foto"><span>G</span></div><h3>Gabi</h3><p>Cabeleireira</p><span class="membro__link">Portfólio em breve</span></article>
-      <article class="membro revela" style="--d:.18s"><div class="membro__foto"><span>J</span></div><h3>Josiane</h3><p>Cabeleireira</p><span class="membro__link">Portfólio em breve</span></article>
-      <article class="membro revela"><div class="membro__foto"><span>K</span></div><h3>Kezia</h3><p>Cabeleireira</p><span class="membro__link">Portfólio em breve</span></article>
-      <article class="membro revela" style="--d:.06s"><div class="membro__foto"><span>N</span></div><h3>Nicoly</h3><p>Cabeleireira</p><span class="membro__link">Portfólio em breve</span></article>
+      <article class="membro membro--dona revela" data-prof="cristiane"><div class="membro__foto"><span>C</span></div><h3>Cristiane</h3><p>À frente do Studio Perpetuélle</p><button type="button" class="membro__link" disabled>Portfólio em breve</button></article>
+      <article class="membro revela" data-prof="andreza" style="--d:.06s"><div class="membro__foto"><span>A</span></div><h3>Andreza</h3><p>Cabeleireira</p><button type="button" class="membro__link" disabled>Portfólio em breve</button></article>
+      <article class="membro revela" data-prof="gabi" style="--d:.12s"><div class="membro__foto"><span>G</span></div><h3>Gabi</h3><p>Cabeleireira</p><button type="button" class="membro__link" disabled>Portfólio em breve</button></article>
+      <article class="membro revela" data-prof="josiane" style="--d:.18s"><div class="membro__foto"><span>J</span></div><h3>Josiane</h3><p>Cabeleireira</p><button type="button" class="membro__link" disabled>Portfólio em breve</button></article>
+      <article class="membro revela" data-prof="kezia"><div class="membro__foto"><span>K</span></div><h3>Kezia</h3><p>Cabeleireira</p><button type="button" class="membro__link" disabled>Portfólio em breve</button></article>
+      <article class="membro revela" data-prof="nicoly" style="--d:.06s"><div class="membro__foto"><span>N</span></div><h3>Nicoly</h3><p>Cabeleireira</p><button type="button" class="membro__link" disabled>Portfólio em breve</button></article>
       <article class="membro revela" style="--d:.12s"><div class="membro__foto"><span>A</span></div><h3>Allison</h3><p>Tecedor · confecção do cabelo</p></article>
       <article class="membro revela" style="--d:.18s"><div class="membro__foto"><span>A</span></div><h3>Ana</h3><p>Tecedora · confecção do cabelo</p></article>
     </div>
@@ -438,6 +438,21 @@
 
 <a href="https://www.trinks.com/studio-perpetuelle-mega-hair-cabelos" target="_blank" rel="noopener" data-agendar class="agendar-fixo" id="agendar-fixo">Agendar avaliação</a>
 
+<dialog class="pf" id="portfolio" aria-labelledby="pf-nome">
+  <div class="pf__topo">
+    <h2><small>Portfólio</small><span id="pf-nome"></span></h2>
+    <button type="button" class="pf__fechar" id="pf-fechar" aria-label="Fechar portfólio">×</button>
+  </div>
+  <div class="pf__filtros" id="pf-filtros"></div>
+  <div class="pf__grade" id="pf-grade"></div>
+  <div class="pf__ver" id="pf-ver" hidden>
+    <div class="pf__ver-topo"><button type="button" id="pf-voltar">‹ Voltar às fotos</button></div>
+    <img id="pf-ver-img" alt="">
+    <div class="pf__ver-base"><button type="button" class="pf__nav" id="pf-ant" aria-label="Foto anterior">‹</button><p id="pf-ver-leg"></p><button type="button" class="pf__nav" id="pf-prox" aria-label="Próxima foto">›</button></div>
+  </div>
+</dialog>
+
+<script src="assets/js/portfolio-dados.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
