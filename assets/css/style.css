@@ -393,6 +393,26 @@ button.membro__link:not(:disabled):hover{color:var(--cobre-claro)}
 .ad__legenda{position:absolute;left:0;right:0;bottom:0;padding:30px 16px 14px;text-align:center;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
   background:linear-gradient(transparent,rgba(0,0,0,.75));pointer-events:none}
 
+/* quatro caminhos (contato) */
+.caminhos{margin-top:36px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;text-align:left}
+.caminho{display:flex;flex-direction:column;gap:10px;padding:26px 22px 22px;border:1px solid var(--cobre-linha);background:rgba(0,0,0,.55);
+  transition:background .3s,border-color .3s,transform .3s var(--ease)}
+.caminho:hover{background:rgba(198,148,67,.1);border-color:var(--cobre);transform:translateY(-3px)}
+.caminho__num{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--cobre)}
+.caminho b{font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.2;color:var(--branco)}
+.caminho span:not(.caminho__num){font-size:15px;line-height:1.55;color:var(--suave);flex:1}
+.caminho i{margin-top:8px;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cobre-claro)}
+.caminho i::after{content:" →"}
+.caminho--destaque{background:var(--cobre);border-color:var(--cobre)}
+.caminho--destaque:hover{background:var(--cobre-claro);border-color:var(--cobre-claro)}
+.caminho--destaque b,.caminho--destaque i,.caminho--destaque .caminho__num{color:#000}
+.caminho--destaque span:not(.caminho__num){color:rgba(0,0,0,.75)}
+.contato__mapa{font-family:var(--sans);font-size:14px}
+.duvidas__mais{margin:28px auto 0;max-width:820px;text-align:center;color:var(--suave)}
+.duvidas__mais a{color:var(--cobre-claro);text-decoration:underline;text-underline-offset:4px}
+@media (max-width:1100px){.caminhos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.caminhos{grid-template-columns:minmax(0,1fr)}.caminho{padding:22px 18px}}
+
 /* CELULAR */
 @media (max-width:900px){
   .nav__menu{display:block}

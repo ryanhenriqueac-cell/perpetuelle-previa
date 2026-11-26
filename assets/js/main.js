@@ -154,11 +154,22 @@
   const AGENDAR_URL = 'https://www.trinks.com/studio-perpetuelle-mega-hair-cabelos';
   document.querySelectorAll('[data-agendar]').forEach(a => { a.href = AGENDAR_URL; });
 
-  /* WhatsApp do salão: preencher com DDI+DDD+número (ex.: 5551999999999) quando o salão enviar */
-  const WHATSAPP = '5531988682189';   // (31) 98868-2189, confirmado pelo Ryan em 23/11
-  const linkWhats = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-  document.getElementById('whats-contato').href = linkWhats('Olá! Vim pelo site da Perpetuélle e quero agendar uma avaliação.');
-  document.getElementById('whats-numero').href = linkWhats('Olá! Vim pelo site da Perpetuélle.');
+  /* WhatsApp: dois direcionamentos (DDI+DDD+número, ex.: 5531999999999)
+     consultor   = Gustavo: avaliação de como o cabelo vai ficar
+     atendimento = Sandra: ajuda para agendar, mais de um serviço, dúvidas sobre mega hair
+     PROVISÓRIO: enquanto não chegam os números deles, os dois usam o número geral do salão (31) 98868-2189 */
+  const WHATS = {
+    consultor:   '5531988682189',   // TROCAR pelo WhatsApp do Gustavo
+    atendimento: '5531988682189'    // TROCAR pelo WhatsApp da Sandra
+  };
+  const MSG_PADRAO = {
+    consultor:   'Olá, Gustavo! Vim pelo site da Perpetuélle e quero fazer uma avaliação do meu cabelo para o mega hair.',
+    atendimento: 'Olá, Sandra! Vim pelo site da Perpetuélle e gostaria de ajuda para agendar.'
+  };
+  const whatsPara = (quem, msg) => `https://wa.me/${WHATS[quem]}?text=${encodeURIComponent(msg)}`;
+  const linkWhats = msg => whatsPara('consultor', msg);       // avaliação, resultado, montar o cabelo
+  const linkAtendimento = msg => whatsPara('atendimento', msg); // agendar com uma profissional, dúvidas
+  document.querySelectorAll('[data-whats]').forEach(a => { a.href = whatsPara(a.dataset.whats, a.dataset.msg || MSG_PADRAO[a.dataset.whats]); });
 
   /* transformações: antes e depois + mosaico (ilustrações até chegarem as fotos reais) */
   const ad = document.getElementById('ad'), adR = document.getElementById('ad-range');
@@ -199,7 +210,7 @@
   addEventListener('resize', () => { miniaturas(); previaCabelo(); });
   document.getElementById('enviar-monte').addEventListener('click', () => {
     const nome = document.getElementById('r-nome').value.trim();
-    const msg = `Olá! ${nome ? 'Sou ' + nome + ' e ' : ''}montei meu cabelo no site da Perpetuélle:\n\n` +
+    const msg = `Olá, Gustavo! ${nome ? 'Sou ' + nome + ' e ' : ''}montei meu cabelo no site da Perpetuélle:\n\n` +
       `• Curvatura: ${valor('curvatura')}\n• Cor: ${valor('cor')}\n• Comprimento: ${valor('comprimento')}\n• Quero: ${valor('servico')}\n\n` +
       (valor('servico') === 'Só o cabelo' ? 'Gostaria de saber os valores e como comprar no salão.' : 'Gostaria de saber os valores e marcar uma avaliação.');
     window.open(linkWhats(msg), '_blank', 'noopener');
@@ -288,9 +299,9 @@
   const dlgNome = document.getElementById('pf-nome'), dlgFiltros = document.getElementById('pf-filtros'), dlgGrade = document.getElementById('pf-grade');
   const dlgVer = document.getElementById('pf-ver'), dlgVerImg = document.getElementById('pf-ver-img'), dlgVerLeg = document.getElementById('pf-ver-leg');
   let pfLista = [], atual = 0, pfProf = null;
-  const msgProf = (sp, servico) => `Olá! Vi o ${servico ? 'trabalho' : 'portfólio'} da ${nomeProf(sp)} no site da Perpetuélle e quero agendar${servico ? ' ' + servico : ''} com ela.`;
+  const msgProf = (sp, servico) => `Olá, Sandra! Vi o ${servico ? 'trabalho' : 'portfólio'} da ${nomeProf(sp)} no site da Perpetuélle e quero agendar${servico ? ' ' + servico : ''} com ela.`;
   const btAgendarProf = document.getElementById('pf-agendar');
-  function atualizaAgendarProf(servico) { btAgendarProf.href = linkWhats(msgProf(pfProf, servico)); btAgendarProf.textContent = `Agendar com a ${nomeProf(pfProf)}`; }
+  function atualizaAgendarProf(servico) { btAgendarProf.href = linkAtendimento(msgProf(pfProf, servico)); btAgendarProf.textContent = `Agendar com a ${nomeProf(pfProf)}`; }
   function mostraGrade(fotos) {
     pfLista = fotos; dlgGrade.replaceChildren(...fotos.map((f, i) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'pf__item';
@@ -333,7 +344,7 @@
   });
   document.querySelectorAll('.membro[data-prof]').forEach(card => {
     const a = document.createElement('a'); a.className = 'membro__agendar'; a.target = '_blank'; a.rel = 'noopener';
-    a.href = linkWhats(`Olá! Vim pelo site da Perpetuélle e quero agendar com a ${nomeProf(card.dataset.prof)}.`);
+    a.href = linkAtendimento(`Olá, Sandra! Vim pelo site da Perpetuélle e quero agendar com a ${nomeProf(card.dataset.prof)}.`);
     a.textContent = `Agendar com a ${nomeProf(card.dataset.prof)}`; card.append(a);
   });
   document.querySelectorAll('.membro[data-prof]').forEach(card => {
@@ -395,7 +406,7 @@
   }), {threshold: .5});
   function abreVideo(v) {
     document.getElementById('vmodal-titulo').textContent = v.titulo;
-    document.getElementById('vmodal-cta').href = linkWhats(`Olá! Vi o vídeo "${v.titulo}" no site da Perpetuélle e tenho interesse.`);
+    document.getElementById('vmodal-cta').href = linkWhats(`Olá, Gustavo! Vi o vídeo "${v.titulo}" no site da Perpetuélle e tenho interesse.`);
     mv.poster = v.poster; mv.src = v.src; mv.muted = false;
     reelsVideos.forEach(x => x.pause());
     vmodal.showModal(); document.body.style.overflow = 'hidden';
